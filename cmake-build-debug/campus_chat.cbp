@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="campus_chat"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="clang"/>
+		<Option virtualFolders="CMake Files\;CMake Files\base\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="campus_chat">
+				<Option output="/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/campus_chat" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/Users/sunshine/Code/C++/CampusChat_Server/."/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/Makefile&quot;  VERBOSE=1 campus_chat"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="campus_chat/fast">
+				<Option output="/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/campus_chat" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/Users/sunshine/Code/C++/CampusChat_Server/."/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/Makefile&quot;  VERBOSE=1 campus_chat/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="base_lib">
+				<Option output="/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/base/libbase_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/base"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/Users/sunshine/Code/C++/CampusChat_Server/."/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Users/sunshine/Code/C++/CampusChat_Server/base/.."/>
+					<Add directory="/Users/sunshine/Code/C++/CampusChat_Server/base/."/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/base/Makefile&quot;  VERBOSE=1 base_lib"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/base/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/base/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/base/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="base_lib/fast">
+				<Option output="/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/base/libbase_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/base"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/Users/sunshine/Code/C++/CampusChat_Server/."/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Users/sunshine/Code/C++/CampusChat_Server/base/.."/>
+					<Add directory="/Users/sunshine/Code/C++/CampusChat_Server/base/."/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/base/Makefile&quot;  VERBOSE=1 base_lib/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/base/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/base/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/base/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/at_exit.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/at_exit.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/base_export.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/bind_util.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/callback.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/command_line.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/command_line.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/default_destroy.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/function_wrapper.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/hash.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/hash.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/lazy_instance.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/lazy_instance_helpers.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/lazy_instance_helpers.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/location.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/location.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/logging.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/logging.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/lru_cache.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/macor.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/message_loop/incoming_task_queue.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/message_loop/incoming_task_queue.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/message_loop/message_loop.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/message_loop/message_loop.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/message_loop/message_loop_task_runner.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/message_loop/message_loop_task_runner.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/message_loop/message_pump.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/message_loop/message_pump.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/message_loop/message_pump_default.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/message_loop/message_pump_default.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/pending_task.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/pending_task.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/port/atomic_pointer.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/port/port.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/port/port_stdxx.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/port/thread_annotations.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/post_task_and_reply_with_result_internal.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/ptr_util.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/random.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/run_loop.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/run_loop.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/sequenced_task_runner.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/sequenced_task_runner.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/sequenced_task_runner_handle.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/sequenced_task_runner_handle.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/sequenced_task_runner_helpers.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/single_thread_task_runner.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/singleton.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/skiplist.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/string_util.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/string_util.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/superfasthash.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/task_runner.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/task_runner.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/task_runner_util.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/thread_safe_queue.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/threading/browser_process_sub_thread.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/threading/browser_process_sub_thread.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/threading/browser_thread.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/threading/browser_thread_impl.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/threading/browser_thread_impl.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/threading/platform_thread.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/threading/platform_thread.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/threading/post_task_and_reply_impl.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/threading/post_task_and_reply_impl.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/threading/thread.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/threading/thread.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/threading/thread_pool.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/threading/thread_pool.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/threading/thread_task_runner_handle.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/threading/thread_task_runner_handle.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/timer/timer.cc">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/timer/timer.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/work_stealing_queue.h">
+			<Option target="base_lib"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/campus_chat_main.cc">
+			<Option target="campus_chat"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/server/server.cc">
+			<Option target="campus_chat"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/server/server.h">
+			<Option target="campus_chat"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/sunshine/Code/C++/CampusChat_Server/base/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\base\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
