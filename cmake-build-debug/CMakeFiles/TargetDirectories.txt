@@ -1,6 +1,0 @@
-/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/CMakeFiles/campus_chat.dir
-/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/base/CMakeFiles/rebuild_cache.dir
-/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/base/CMakeFiles/edit_cache.dir
-/Users/sunshine/Code/C++/CampusChat_Server/cmake-build-debug/base/CMakeFiles/base_lib.dir
