@@ -5,11 +5,45 @@
 #ifndef CAMPUS_CHAT_SERVER_H
 #define CAMPUS_CHAT_SERVER_H
 
+#include <list>
 #include <boost/asio.hpp>
 
-class Server {
+#include "server/io_service_pool.h"
 
+namespace cchat {
+
+class TalkToClient;
+
+class Server {
+ public:
+    Server(std::size_t thread_count,
+           const boost::asio::ip::tcp::endpoint &endpoint);
+    ~Server();
+
+    // 获得当前的Server对象，在一个程序中理应只出现一个Server.
+    static Server* Currnet();
+
+    // 开始这个服务，在这个函数中会接受连接
+    void Start();
+
+    // 等待运行完成
+    void Run();
+
+    void Stop();
+
+ private:
+    void Accept();
+    void OnConnect(std::shared_ptr<TalkToClient> client,
+                   const boost::system::error_code& error_code);
+    // 线程数量
+    const std::size_t thread_count_;
+    // io_service的简单封装的线程池
+    IOServicePool io_service_pool_;
+    std::list<std::shared_ptr<TalkToClient>> clients_;
+    boost::asio::ip::tcp::acceptor acceptor_;
 };
+
+}
 
 
 #endif //CAMPUS_CHAT_SERVER_H

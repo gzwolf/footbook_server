@@ -53,11 +53,13 @@ set(MESSAGE_LOOP_SRC
         message_loop/message_pump.cc
         message_loop/message_pump_default.h
         message_loop/message_pump_default.cc)
-set(PORT_SRC port/atomic_pointer.h
+set(PORT_SRC
+        port/atomic_pointer.h
         port/port.h
         port/port_stdxx.h
         port/thread_annotations.h)
-set(THREADING_SRC threading/browser_process_sub_thread.h
+set(THREADING_SRC
+        threading/browser_process_sub_thread.h
         threading/browser_process_sub_thread.cc
         threading/browser_thread.h
         threading/browser_thread_impl.cc
@@ -72,7 +74,8 @@ set(THREADING_SRC threading/browser_process_sub_thread.h
         threading/thread_pool.cc
         threading/thread_task_runner_handle.h
         threading/thread_task_runner_handle.cc)
-set(TIMER_SRC timer/timer.h
+set(TIMER_SRC
+        timer/timer.h
         timer/timer.cc)
 
 set(ALL_BASE_SRC ${BASE_SRC} ${MESSAGE_LOOP_SRC} ${PORT_SRC}

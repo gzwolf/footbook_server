@@ -16,10 +16,15 @@ include_directories(./)
 include_directories(${INC_DIR})
 link_directories(${LINK_DIR})
 
-set(SERVER_SRC server/server.h server/server.cc)
+set(SERVER_SRC
+        server/server.h
+        server/server.cc
+        server/io_service_pool.cc
+        server/io_service_pool.h
+        server/talk_to_client.cc
+        server/talk_to_client.h)
+
 set(MAIN_SRC campus_chat_main.cc)
-
-
 
 set(ALL_SRC ${SERVER_SRC} ${MAIN_SRC})
 
