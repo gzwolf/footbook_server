@@ -13,6 +13,8 @@ TalkToClient::TalkToClient(boost::asio::io_service &io_service)
 }
 
 void TalkToClient::Start() {
+    boost::asio::ip::tcp::no_delay no_delay(true);
+    sock_.set_option(no_delay);
 
 }
 

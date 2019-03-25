@@ -32,6 +32,8 @@ class TalkToClient : public std::enable_shared_from_this<TalkToClient> {
     Socket& sock() { return sock_; }
     std::string user_name() { return user_name_; }
 
+    void SendMessage();
+
  protected:
     explicit TalkToClient(boost::asio::io_service& io_service);
  private:

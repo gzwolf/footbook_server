@@ -55,9 +55,11 @@ void Server::OnConnect(std::shared_ptr<TalkToClient> client,
                        const boost::system::error_code &error_code) {
     if (error_code) {
         // 错误处理.
-
+        LOG(ERROR) << "connect error!";
         return;
     }
+    LOG(INFO) << "There are new customer connections， IP is " <<
+        client->sock().remote_endpoint().address().to_string();
     // 开启会话.
     client->Start();
 

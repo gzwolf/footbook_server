@@ -22,7 +22,9 @@ set(SERVER_SRC
         server/io_service_pool.cc
         server/io_service_pool.h
         server/talk_to_client.cc
-        server/talk_to_client.h)
+        server/talk_to_client.h
+        server/glog_helper.h
+        server/glog_helper.cc server/message.cc server/message.h)
 
 set(MAIN_SRC campus_chat_main.cc)
 
@@ -33,4 +35,4 @@ add_subdirectory(base)
 #利用SRC生成一个可执行文件
 add_executable(${PROJECT_NAME} ${ALL_SRC})
 
-target_link_libraries(${PROJECT_NAME} glog base_lib boost_thread-mt boost_system)
+target_link_libraries(${PROJECT_NAME} glog base_lib boost_thread-mt boost_system boost_filesystem)
