@@ -18,7 +18,8 @@ Server::Server(std::size_t thread_count,
                const boost::asio::ip::tcp::endpoint &endpoint)
     : thread_count_(thread_count),
       io_service_pool_(thread_count),
-      acceptor_(io_service_pool_.get_io_service()){
+      acceptor_(io_service_pool_.get_io_service()),
+      major_thread_(CampusChatThread::MSG){
     if (g_instance == nullptr)
         g_instance = this;
     acceptor_.open(endpoint.protocol());
@@ -32,6 +33,7 @@ Server *Server::Currnet() {
 }
 
 void Server::Start() {
+    major_thread_.RegisterAsBrowserThread();
     Accept();
 }
 
@@ -56,12 +58,12 @@ void Server::OnConnect(std::shared_ptr<TalkToClient> client,
     if (error_code) {
         // 错误处理.
         LOG(ERROR) << "connect error!";
-        return;
+    } else {
+        LOG(INFO) << "There are new customer connections， IP is " <<
+                  client->sock().remote_endpoint().address().to_string();
+        // 开启会话.
+        client->Start();
     }
-    LOG(INFO) << "There are new customer connections， IP is " <<
-        client->sock().remote_endpoint().address().to_string();
-    // 开启会话.
-    client->Start();
 
     TalkToClient::TalkToClientPtr new_client =
         TalkToClient::New(io_service_pool_.get_io_service());

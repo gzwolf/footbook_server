@@ -10,8 +10,14 @@
 #include <boost/asio.hpp>
 
 #include "base/macor.h"
+#include "server/message.h"
+#include "server/listener.h"
 
 namespace cchat {
+
+namespace {
+const int kTextBufferSize = 4096;
+}
 
 class TalkToClient : public std::enable_shared_from_this<TalkToClient> {
  public:
@@ -35,12 +41,34 @@ class TalkToClient : public std::enable_shared_from_this<TalkToClient> {
     void SendMessage();
 
  protected:
+    class Context;
     explicit TalkToClient(boost::asio::io_service& io_service);
+
+    class Context : public Listener {
+     public:
+        bool OnMessageReceived(const Message& message) override;
+        void OnClienntConnect() override;
+        void OnBadMessageReceived(const Message& message) override;
+
+     protected:
+        ~Context() override;
+
+     private:
+
+    };
+
+    void Read();
+    void ProcessMessage(std::string str);
+    void OnRead(const ErrorCode& error_code, size_t byte);
+
  private:
     boost::asio::io_service& io_service_;
     boost::asio::ip::tcp::socket sock_;
     std::string user_name_;
     bool is_started_;
+    char buf_[kTextBufferSize];
+
+    Listener* listener_;
 
     DISALLOW_COPY_AND_ASSIGN(TalkToClient);
 };

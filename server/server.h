@@ -8,7 +8,10 @@
 #include <list>
 #include <boost/asio.hpp>
 
+#include "base/macor.h"
 #include "server/io_service_pool.h"
+#include "base/threading/browser_process_sub_thread.h"
+#include "server/alias.h"
 
 namespace cchat {
 
@@ -32,6 +35,7 @@ class Server {
     void Stop();
 
  private:
+
     void Accept();
     void OnConnect(std::shared_ptr<TalkToClient> client,
                    const boost::system::error_code& error_code);
@@ -41,6 +45,9 @@ class Server {
     IOServicePool io_service_pool_;
     std::list<std::shared_ptr<TalkToClient>> clients_;
     boost::asio::ip::tcp::acceptor acceptor_;
+    CampusChatSubThread major_thread_;
+
+    DISALLOW_COPY_AND_ASSIGN(Server);
 };
 
 }
