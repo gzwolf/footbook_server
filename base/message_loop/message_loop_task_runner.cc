@@ -10,7 +10,8 @@
 #include <utility>
 
 #include "base/location.h"
-#include "base/logging.h"
+#include <glog/logging.h>
+//#include "base/logging.h"
 #include "base/message_loop/incoming_task_queue.h"
 
 namespace base {

@@ -9,7 +9,8 @@
 
 #include <utility>
 
-#include "base/logging.h"
+#include <glog/logging.h>
+//#include "base/logging.h"
 #include "base/threading/post_task_and_reply_impl.h"
 
 namespace base {

@@ -24,7 +24,7 @@ set(SERVER_SRC
         server/talk_to_client.cc
         server/talk_to_client.h
         server/glog_helper.h
-        server/glog_helper.cc server/message.cc server/message.h)
+        server/glog_helper.cc server/message.cc server/message.h server/alias.h server/listener.cc server/listener.h)
 
 set(MAIN_SRC campus_chat_main.cc)
 

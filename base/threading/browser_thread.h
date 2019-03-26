@@ -17,7 +17,8 @@
 #include "base/base_export.h"
 #include "base/callback.h"
 #include "base/location.h"
-#include "base/logging.h"
+#include <glog/logging.h>
+//#include "base/logging.h"
 #include "base/macor.h"
 #include "base/single_thread_task_runner.h"
 #include "base/post_task_and_reply_with_result_internal.h"
@@ -33,6 +34,8 @@ class BASE_EXPORT BrowserThread {
 	 enum ID {
 		 UI,
 		 IO,
+		 MSG,
+		 DB,
 		 ID_COUNT
 	 };
 
@@ -124,7 +127,7 @@ class BASE_EXPORT BrowserThread {
 			 }
 			 else {
 				 if (!DeleteSoon(thread, FROM_HERE, x)) {
-					 LOG(logging::LogType::ERROR) << 
+					 LOG(ERROR) <<
 						 "DeleteSoon failed on thread" << thread;
 				 }
 			 }

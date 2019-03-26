@@ -9,7 +9,8 @@
 
 
 #include "base/location.h"
-#include "base/logging.h"
+#include <glog/logging.h>
+//#include "base/logging.h"
 #include "base/sequenced_task_runner.h"
 #include "base/sequenced_task_runner_handle.h"
 #include "base/bind_util.h"

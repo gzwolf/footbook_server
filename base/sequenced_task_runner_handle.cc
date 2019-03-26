@@ -11,7 +11,8 @@
 #include <thread>
 
 #include "base/lazy_instance.h"
-#include "base/logging.h"
+//#include "base/logging.h"
+#include <glog/logging.h>
 #include "base/threading/thread_task_runner_handle.h"
 
 namespace base {

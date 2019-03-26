@@ -54,7 +54,7 @@ class BASE_EXPORT RunLoop {
 	void RunUntilIdle();
 
 	bool running() const {
-		//return running_;
+		return running_;
 	}
 	
 	// Quit() 是立即退出一个在先前运行的RunLoop, QuitWhenIdle() 是在队列上没有

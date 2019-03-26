@@ -10,7 +10,8 @@
 #include <stddef.h>
 #include <utility>
 
-#include "base/logging.h"
+#include <glog/logging.h>
+//#include "base/logging.h"
 #include "base/threading/platform_thread.h"
 #include "base/sequenced_task_runner_handle.h"
 #include "base/bind_util.h"

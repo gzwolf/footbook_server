@@ -7,7 +7,8 @@
 */
 #include "base/at_exit.h"
 
-#include "base/logging.h"
+//#include "base/logging.h"
+#include <glog/logging.h>
 #include "base/bind_util.h"
 
 namespace base {
@@ -24,7 +25,7 @@ AtExitManager::AtExitManager()
 
 AtExitManager::~AtExitManager() {
 	if (!g_top_manager) {
-		LOG(logging::LogType::ERROR) << "Tried to RegisterCallback without an AtExitManager";
+		LOG(ERROR) << "Tried to RegisterCallback without an AtExitManager";
 		return;
 	}
 
@@ -44,7 +45,7 @@ void AtExitManager::RegisterCallback(AtExitCallbackType func,
 
 void AtExitManager::RegisterTask(base::Closure task) {
 	if (!g_top_manager) {
-		LOG(logging::LogType::ERROR) << "Tried to RegisterCallback without an AtExitManager";
+		LOG(ERROR) << "Tried to RegisterCallback without an AtExitManager";
 		return;
 	}
 
@@ -55,7 +56,7 @@ void AtExitManager::RegisterTask(base::Closure task) {
 
 void AtExitManager::ProcessCallbacksNow() {
 	if (!g_top_manager) {
-		LOG(logging::LogType::ERROR) << "Tried to RegisterCallback without an AtExitManager";
+		LOG(ERROR) << "Tried to RegisterCallback without an AtExitManager";
 		return;
 	}
 

@@ -30,7 +30,7 @@ class WorkStaealinggQueue {
 
 	 bool Empty() const {
 		 std::lock_guard<std::mutex> lock(mutex_);
-		 queue_.empty();
+		 return queue_.empty();
 	 }
 
 	 bool TryPop(Data& res) {

@@ -11,7 +11,8 @@
 #include <utility>
 
 #include "base/callback.h"
-#include "base/logging.h"
+#include <glog/logging.h>
+//#include "base/logging.h"
 #include "base/bind_util.h"
 #include "base/post_task_and_reply_with_result_internal.h"
 #include "base/task_runner.h"

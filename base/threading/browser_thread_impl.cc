@@ -11,7 +11,8 @@
 
 #include "base/threading/browser_thread.h"
 #include "base/lazy_instance.h"
-#include "base/logging.h"
+#include <glog/logging.h>
+//#include "base/logging.h"
 #include "base/task_runner_util.h"
 #include "base/ptr_util.h"
 

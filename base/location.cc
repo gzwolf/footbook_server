@@ -11,7 +11,8 @@
 #include <stdio.h>
 
 #include "base/macor.h"
-#include "base/logging.h"
+//#include "base/logging.h"
+#include <glog/logging.h>
 
 namespace base {
 

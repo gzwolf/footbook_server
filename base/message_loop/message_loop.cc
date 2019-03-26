@@ -12,7 +12,8 @@
 
 #include "base/message_loop/message_pump_default.h"
 #include "base/single_thread_task_runner.h"
-#include "base/logging.h"
+#include <glog/logging.h>
+//#include "base/logging.h"
 #include "base/ptr_util.h"
 
 namespace base {

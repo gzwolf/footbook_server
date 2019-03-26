@@ -11,7 +11,8 @@
 #include <thread>
 
 #include "base/at_exit.h"
-#include "base/logging.h"
+//#include "base/logging.h"
+#include <glog/logging.h>
 
 
 namespace base {

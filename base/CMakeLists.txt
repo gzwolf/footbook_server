@@ -20,7 +20,6 @@ set(BASE_SRC
         lazy_instance.h
         lazy_instance_helpers.h lazy_instance_helpers.cc
         location.h location.cc
-        logging.h logging.cc
         lru_cache.h
         macor.h
         pending_task.h pending_task.cc

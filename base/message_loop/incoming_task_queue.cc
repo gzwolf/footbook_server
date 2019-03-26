@@ -8,7 +8,8 @@
 
 #include "base/message_loop/incoming_task_queue.h"
 #include "base/message_loop/message_loop.h"
-#include "base/logging.h"
+#include <glog/logging.h>
+//#include "base/logging.h"
 
 namespace base {
 

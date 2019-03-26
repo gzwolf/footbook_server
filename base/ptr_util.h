@@ -20,7 +20,7 @@ struct Test {
 	void deleter (T* ptr) {
 		delete ptr;
 		ptr = nullptr;
-		std::clog << "shared_ptr delete the pointer." << std::endl;
+		//std::clog << "shared_ptr delete the pointer." << std::endl;
 	}
 	void operator()(T* ptr) {
 		deleter(ptr);
@@ -39,7 +39,6 @@ class Test2 {
 template <typename T,
 		  typename Traits = DefaultDestroyTraits<T>>
 std::shared_ptr<T> WrapShared(T* ptr) {
-	std::shared_ptr<Test2> spi(new Test2(), Test<Test2>());
 	return std::shared_ptr<T>(ptr, Traits());
 }
 

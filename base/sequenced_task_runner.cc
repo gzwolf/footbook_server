@@ -31,7 +31,7 @@ SequencedTaskRunner::DeleteOrReleaseSoonInternal(const Location & from_here,
 
 OnTaskRunnerDeleter::OnTaskRunnerDeleter(
 	std::shared_ptr<SequencedTaskRunner> task_ruuner)
-	: task_runner_(std::move(task_runner_)) {
+	: task_runner_(std::move(task_ruuner)) {
 }
 
 OnTaskRunnerDeleter::~OnTaskRunnerDeleter() = default;

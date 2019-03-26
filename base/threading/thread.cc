@@ -3,11 +3,11 @@
 #include <cassert>
 #include <thread>
 
-#include "base/logging.h"
+#include <glog/logging.h>
+//#include "base/logging.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/run_loop.h"
 #include "base/location.h"
-#include "base/logging.h"
 #include "base/lazy_instance.h"
 #include "base/bind_util.h"
 

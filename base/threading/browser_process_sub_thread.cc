@@ -50,6 +50,12 @@ void BrowserProcessSubThread::Run(base::RunLoop * run_loop) {
 	case BrowserThread::IO:
 		IOThreadRun(run_loop);
 		break;
+	case BrowserThread::MSG:
+		UIThreadRun(run_loop);
+		break;
+	case BrowserThread::DB:
+		UIThreadRun(run_loop);
+		break;
 	case BrowserThread::ID_COUNT:
 		break;
 	}
