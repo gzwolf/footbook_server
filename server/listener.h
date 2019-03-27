@@ -12,10 +12,10 @@ class Message;
 class Listener {
  public:
     virtual bool OnMessageReceived(const Message& message) = 0;
-    virtual void OnClienntConnect() {}
+    virtual void OnClientConnect() {}
     virtual void OnBadMessageReceived(const Message& message) {}
 
- protected:
+ //protected:
     virtual ~Listener() = default;
 };
 

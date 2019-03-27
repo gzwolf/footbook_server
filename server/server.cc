@@ -47,7 +47,7 @@ void Server::Stop() {
 
 void Server::Accept() {
    TalkToClient::TalkToClientPtr new_client =
-       TalkToClient::New(io_service_pool_.get_io_service());
+       TalkToClient::New(io_service_pool_.get_io_service(), *this);
 
    acceptor_.async_accept(new_client->sock(),
        std::bind(&Server::OnConnect, this, new_client, std::placeholders::_1));
@@ -66,7 +66,7 @@ void Server::OnConnect(std::shared_ptr<TalkToClient> client,
     }
 
     TalkToClient::TalkToClientPtr new_client =
-        TalkToClient::New(io_service_pool_.get_io_service());
+        TalkToClient::New(io_service_pool_.get_io_service(),*this);
 
     acceptor_.async_accept(new_client->sock(),
         std::bind(&Server::OnConnect, this, new_client, std::placeholders::_1));

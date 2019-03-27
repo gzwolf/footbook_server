@@ -8,14 +8,16 @@
 
 namespace cchat {
 
-TalkToClient::TalkToClient(boost::asio::io_service &io_service)
+TalkToClient::TalkToClient(boost::asio::io_service &io_service,
+                           Server& server)
     : io_service_(io_service),
-      sock_(io_service_){
+      sock_(io_service_),
+      listener_(new Context(server)){
     memset(buf_, 0, kTextBufferSize);
 }
 
 void TalkToClient::Start() {
-    listener_->OnClienntConnect();
+    listener_->OnClientConnect();
     boost::asio::ip::tcp::no_delay no_delay(true);
     sock_.set_option(no_delay);
     Read();
@@ -43,9 +45,9 @@ void TalkToClient::ProcessMessage(std::string str) {
 }
 
 TalkToClient::TalkToClientPtr TalkToClient::New(
-        boost::asio::io_service &io_service) {
+        boost::asio::io_service &io_service, Server& server) {
     //return std::make_shared<TalkToClient>(io_service);
-    return std::shared_ptr<TalkToClient>(new TalkToClient(io_service));
+    return std::shared_ptr<TalkToClient>(new TalkToClient(io_service, server));
 }
 
 void TalkToClient::OnRead(const ErrorCode &error_code, size_t byte) {
@@ -67,7 +69,7 @@ bool TalkToClient::Context::OnMessageReceived(const Message &message) {
     return false;
 }
 
-void TalkToClient::Context::OnClienntConnect() {
+void TalkToClient::Context::OnClientConnect() {
 }
 
 void TalkToClient::Context::OnBadMessageReceived(const Message &message) {
@@ -77,4 +79,9 @@ void TalkToClient::Context::OnBadMessageReceived(const Message &message) {
 TalkToClient::Context::~Context() {
 
 }
+
+TalkToClient::Context::Context(Server &server)
+    : server_(server){
+}
+
 }   // namesapce cchat

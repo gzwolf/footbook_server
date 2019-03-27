@@ -33,19 +33,22 @@ class Message {
     void set_type(uint32_t type) { header()->type = type; }
     void set_sender(int32_t sender) { header()->sender = sender; }
     void set_receiver(int32_t receiver) { header()->receiver = receiver; }
-    void set_flags(uint8 flags) { header()->flags = flags; }
+    void set_flags(uint8_t flags) { header()->flags = flags; }
 
     void set_payload(const char* data, int data_len) {
         DCHECK(data);
         std::copy(data, data + data_len, payload_.begin());
     }
 
+
+    std::size_t header_size();
     uint32 payload_size() const { return header()->payload_size; }
-
-
     uint32 type() const { return header()->type; }
-
+    int32_t sender() const { return header()->sender; }
+    int32_t receiver() const { return header()->receiver; }
     uint8 flags() const { return header()->flags; }
+    const char* payload() const { return payload_.data(); }
+    std::string payload() { return payload_; }
 
  protected:
 #pragma pack(push, 4)
@@ -66,13 +69,13 @@ class Message {
 
     Header header_;
     std::string payload_;            // 实际数据
+
 };
 
-bool EncodeMessage(const Message& msg, std::string& str);
 bool EncodeMessage(const Message& msg, char* str);
 
 bool DecodeMessage(const std::string& str, Message* msg);
-bool EncodeMessage(const char* str, Message* msg);
+bool DecodeMessage(const char* str, Message* msg);
 
 }
 #endif //CAMPUS_CHAT_MESSAGE_H

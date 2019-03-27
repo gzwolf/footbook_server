@@ -12,6 +12,7 @@
 #include "base/macor.h"
 #include "server/message.h"
 #include "server/listener.h"
+#include "server/server.h"
 
 namespace cchat {
 
@@ -27,7 +28,8 @@ class TalkToClient : public std::enable_shared_from_this<TalkToClient> {
 
     // 新建一个TalkToClient, 返回一个std::shared_ptr智能指针，想要获得TalkToCLient
     // 必须调用这个函数，TalkToClient不支持赋值和copy
-    static TalkToClientPtr New(boost::asio::io_service& io_service);
+    static TalkToClientPtr New(boost::asio::io_service& io_service,
+                               Server& context);
 
     // 开始talk to client，里面的读取和写入都是异步操作
     void Start();
@@ -40,21 +42,24 @@ class TalkToClient : public std::enable_shared_from_this<TalkToClient> {
 
     void SendMessage();
 
+
+
  protected:
-    class Context;
-    explicit TalkToClient(boost::asio::io_service& io_service);
+    explicit TalkToClient(boost::asio::io_service& io_service,
+                          Server& server);
 
     class Context : public Listener {
      public:
+        explicit Context(Server& server);
         bool OnMessageReceived(const Message& message) override;
-        void OnClienntConnect() override;
+        void OnClientConnect() override;
         void OnBadMessageReceived(const Message& message) override;
 
      protected:
         ~Context() override;
 
      private:
-
+        Server& server_;
     };
 
     void Read();
@@ -68,7 +73,7 @@ class TalkToClient : public std::enable_shared_from_this<TalkToClient> {
     bool is_started_;
     char buf_[kTextBufferSize];
 
-    Listener* listener_;
+    std::unique_ptr<Listener> listener_;
 
     DISALLOW_COPY_AND_ASSIGN(TalkToClient);
 };
