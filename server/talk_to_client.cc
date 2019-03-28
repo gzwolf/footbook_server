@@ -37,10 +37,12 @@ void TalkToClient::Read() {
 void TalkToClient::ProcessMessage(std::string str) {
     Message msg;
     bool result = DecodeMessage(str, &msg);
-    if (result)
-        listener_->OnMessageReceived(msg);
-    else
+    if (result) {
+        if (!listener_->OnMessageReceived(msg))
+            listener_->OnBadMessageReceived(msg);
+    } else {
         listener_->OnBadMessageReceived(msg);
+    }
 
 }
 
@@ -66,8 +68,21 @@ void TalkToClient::OnRead(const ErrorCode &error_code, size_t byte) {
 
 
 bool TalkToClient::Context::OnMessageReceived(const Message &message) {
-    return false;
+    switch (static_cast<Message::MsgType>(message.type())) {
+        case Message::kGeneralChat:
+            break;
+        case Message::kGroupChat:
+            break;
+        case Message::kSignIn:
+            break;
+        case Message::kRegister:
+            break;
+        default:
+            return false;
+    }
+    return true;
 }
+
 
 void TalkToClient::Context::OnClientConnect() {
 }

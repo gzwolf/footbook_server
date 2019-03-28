@@ -6,14 +6,20 @@
 
 #include <cstring>
 
+#include "server/config.h"
+
 namespace cchat {
 
 namespace {
-constexpr std::size_t kHeaderSize = 17;
-}
+constexpr std::size_t kHeaderSize = 20;
+
+
+
+}   // namespace
 
 Message::Message(const std::string &str)
     : payload_(str) {
+    header_.payload_size = payload_.size();
 }
 
 Message::Message(const char *data, int data_len)
@@ -37,17 +43,18 @@ std::size_t Message::header_size() {
     return kHeaderSize;
 }
 
-template <typename T>
-void EncodeFixedInteget(char* buf, T value) {
-    memcpy(buf, &value, sizeof(T));
+bool EncodeMessage(const Message& msg, std::string* str) {
+    if (!str->empty())
+        str->clear();
+    PutFixed32(str, msg.payload_size());
+    PutFixed32(str, msg.type());
+    PutFixed32(str, msg.sender());
+    PutFixed32(str, msg.receiver());
+    PutFixed32(str, msg.status());
+    str->append(msg.payload(), msg.payload_size());
+    return true;
 }
 
-template <typename T>
-auto DecodeFixedInteger(const char* ptr) {
-    T result;
-    memcpy(&result, ptr, sizeof(T));
-    return result;
-}
 
 bool EncodeMessage(const Message& msg, char* str, int len) {
     if (str)
@@ -57,27 +64,27 @@ bool EncodeMessage(const Message& msg, char* str, int len) {
     size_t cur_len = sizeof(msg.payload_size());
     if (len < offset + cur_len)
         return false;
-    EncodeFixedInteget(str + offset, msg.payload_size());
+    EncodeFixed32(str + offset, msg.payload_size());
     offset += cur_len;
     cur_len = sizeof(msg.type());
     if (len < offset + cur_len)
         return false;
-    EncodeFixedInteget(str + offset, msg.type());
+    EncodeFixed32(str + offset, msg.type());
     offset += cur_len;
     cur_len = sizeof(msg.sender());
     if (len < offset + cur_len)
         return false;
-    EncodeFixedInteget(str + offset, msg.sender());
+    EncodeFixed32(str + offset, msg.sender());
     offset += cur_len;
     cur_len = sizeof(msg.receiver());
     if (len < offset + cur_len)
         return false;
-    EncodeFixedInteget(str + offset, msg.receiver());
+    EncodeFixed32(str + offset, msg.receiver());
     offset += cur_len;
-    cur_len = sizeof(msg.flags());
+    cur_len = sizeof(msg.status());
     if (len < offset + cur_len)
         return false;
-    EncodeFixedInteget(str + offset, msg.flags());
+    EncodeFixed32(str + offset, msg.status());
     offset += cur_len;
     cur_len = msg.payload_size();
     if (len < offset + cur_len)
@@ -95,21 +102,22 @@ bool DecodeMessage(const char* str, std::size_t len, Message* msg) {
 
     // offset记录着当前str所在的偏移位置.
     size_t offset = 0;
-    uint32_t paload_size = DecodeFixedInteger<uint32_t>(str + offset);
+    uint32_t paload_size = DecodeFixed32(str + offset);
     // 如果真正的数据长度(data_len = len - msg->header_size())小于paload_size,
     // 消息格式错误
     if (len - msg->header_size() < paload_size)
         return false;
     offset += sizeof(uint32_t);
-    msg->set_type(DecodeFixedInteger<uint32_t>(str + offset));
+    msg->set_type(DecodeFixed32(str + offset));
     offset += sizeof(uint32_t);
-    msg->set_sender(DecodeFixedInteger<int32_t>(str + offset));
-    offset += sizeof(int32_t);
-    msg->set_receiver(DecodeFixedInteger<int32_t>(str + offset));
-    offset += sizeof(int32_t);
-    msg->set_flags(DecodeFixedInteger<uint8_t>(str + offset));
-    offset += sizeof(uint8_t);
-    msg->set_payload(str + offset, paload_size);
+    msg->set_sender(DecodeFixed32(str + offset));
+    offset += sizeof(uint32_t);
+    msg->set_receiver(DecodeFixed32(str + offset));
+    offset += sizeof(uint32_t);
+    msg->set_status(DecodeFixed32(str + offset));
+    offset += sizeof(uint32_t);
+    std::string payload(str + offset, paload_size);
+    msg->set_payload(payload);
     return true;
 }
 

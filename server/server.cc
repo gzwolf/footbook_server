@@ -33,6 +33,7 @@ Server *Server::Currnet() {
 }
 
 void Server::Start() {
+    major_thread_.Start();
     major_thread_.RegisterAsBrowserThread();
     Accept();
 }
@@ -42,6 +43,7 @@ void Server::Run() {
 }
 
 void Server::Stop() {
+    major_thread_.Stop();
     io_service_pool_.Stop();
 }
 

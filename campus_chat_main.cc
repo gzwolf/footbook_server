@@ -1,8 +1,26 @@
 
 #include "server/glog_helper.h"
 #include "server/server.h"
+#include "server/message.h"
 
 int main(int argc, char* argv[]) {
+    std::string str = "I love you!";
+    cchat::Message msg(str);
+    msg.set_sender(123);
+    msg.set_receiver(0);
+    msg.set_status(3);
+    msg.set_type(0x1234);
+
+    std::string encode_str;
+    cchat::Message decode_msg;
+
+    cchat::EncodeMessage(msg, &encode_str);
+    cchat::DecodeMessage(encode_str, &decode_msg);
+
+    std::cout << decode_msg.payload_size() << "\nsender = "
+            << decode_msg.sender() << "\nreceiver = " << decode_msg.receiver()
+            << "\nstatus = " << decode_msg.status() << "payload = " << decode_msg.payload() << std::endl;
+
     cchat_log::GlogHelper glog_helper(argv[0]);
 
     const char host[] = "127.0.0.1";

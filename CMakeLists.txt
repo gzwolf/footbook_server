@@ -24,11 +24,18 @@ set(SERVER_SRC
         server/talk_to_client.cc
         server/talk_to_client.h
         server/glog_helper.h
-        server/glog_helper.cc server/message.cc server/message.h server/alias.h server/listener.cc server/listener.h)
+        server/glog_helper.cc
+        server/message.cc
+        server/message.h
+        server/alias.h
+        server/listener.cc
+        server/listener.h
+        server/config.h
+        server/config.cc)
 
 set(MAIN_SRC campus_chat_main.cc)
 
-set(ALL_SRC ${SERVER_SRC} ${MAIN_SRC})
+set(ALL_SRC ${SERVER_SRC} ${MAIN_SRC} server/port.h)
 
 add_subdirectory(base)
 
