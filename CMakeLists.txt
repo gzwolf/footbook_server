@@ -31,7 +31,11 @@ set(SERVER_SRC
         server/listener.cc
         server/listener.h
         server/config.h
-        server/config.cc)
+        server/config.cc
+        server/client.cc
+        server/client.h
+        server/status.cc
+        server/status.h)
 
 set(MAIN_SRC campus_chat_main.cc)
 
