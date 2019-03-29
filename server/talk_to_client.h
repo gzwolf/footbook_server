@@ -13,6 +13,8 @@
 #include "server/message.h"
 #include "server/listener.h"
 #include "server/server.h"
+#include "server/status.h"
+
 
 namespace cchat {
 
@@ -54,7 +56,8 @@ class TalkToClient : public std::enable_shared_from_this<TalkToClient> {
         bool OnMessageReceived(const Message& message) override;
         void OnClientConnect() override;
         void OnBadMessageReceived(const Message& message) override;
-
+        void OnLogin(const Status& status) override;
+        void OnRegister(const Status& status) override;
      protected:
         ~Context() override;
 

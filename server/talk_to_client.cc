@@ -2,9 +2,12 @@
 // Created by YangGuang on 2019-03-24.
 //
 
-#include "talk_to_client.h"
+#include "server/talk_to_client.h"
 #include "base/threading/browser_thread.h"
-#include "alias.h"
+#include "server/alias.h"
+#include "server/client.h"
+#include "talk_to_client.h"
+
 
 namespace cchat {
 
@@ -66,15 +69,19 @@ void TalkToClient::OnRead(const ErrorCode &error_code, size_t byte) {
     Read();
 }
 
-
 bool TalkToClient::Context::OnMessageReceived(const Message &message) {
     switch (static_cast<Message::MsgType>(message.type())) {
         case Message::kGeneralChat:
             break;
         case Message::kGroupChat:
             break;
-        case Message::kSignIn:
+        case Message::kSignIn: {
+            std::string user_name;
+            std::string password;
+            Client::Login(user_name, password, std::bind(
+                    &Listener::OnLogin, this, std::placeholders::_1));
             break;
+        }
         case Message::kRegister:
             break;
         default:
@@ -97,6 +104,18 @@ TalkToClient::Context::~Context() {
 
 TalkToClient::Context::Context(Server &server)
     : server_(server){
+}
+
+void TalkToClient::Context::OnLogin(const Status &status) {
+    if (status.ok()) {
+        // 登陆成功, 发送信息
+    } else {
+        // 登陆失败
+    }
+}
+
+void TalkToClient::Context::OnRegister(const Status &status) {
+    Listener::OnRegister(status);
 }
 
 }   // namesapce cchat
