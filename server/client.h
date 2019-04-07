@@ -16,8 +16,8 @@ class Client {
     using LoginCallback = std::function<void(const Status&)>;
     using RegisterCallback = std::function<void(const Status&)>;
  public:
-    static void Login(const std::string &user_name,
-                      const std::string &password,
+    static void Login(const std::string& user_name,
+                      const std::string& password,
                       const LoginCallback& callback);
 
     static void Register(const std::string& user_nmae,
@@ -27,7 +27,11 @@ class Client {
     static Status LoginOut();
 
  private:
-    static void OnGetDBComplete();
+    static void OnGetDBCompleteForLogin(const std::string& user_name,
+                                        const std::string& password,
+                                        const LoginCallback& callback,
+                                        const std::vector<std::string>& result);
+    static std::vector<std::string> db_result_;
 };
 
 }

@@ -19,7 +19,8 @@ Server::Server(std::size_t thread_count,
     : thread_count_(thread_count),
       io_service_pool_(thread_count),
       acceptor_(io_service_pool_.get_io_service()),
-      major_thread_(CampusChatThread::MSG){
+      major_thread_(CampusChatThread::MSG),
+      db_thread_(CampusChatThread::DB) {
     if (g_instance == nullptr)
         g_instance = this;
     acceptor_.open(endpoint.protocol());
@@ -34,7 +35,9 @@ Server *Server::Currnet() {
 
 void Server::Start() {
     major_thread_.Start();
+    db_thread_.Start();
     major_thread_.RegisterAsBrowserThread();
+    db_thread_.RegisterAsBrowserThread();
     Accept();
 }
 

@@ -49,7 +49,7 @@ class Message {
         header()->payload_size = data_len;
     }
 
-    void set_payload(const std::string str) {
+    void set_payload(const std::string& str) {
         payload_ = str;
         header()->payload_size = payload_.size();
     }

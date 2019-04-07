@@ -89,8 +89,7 @@ class LazyInstance {
 	 typedef LazyInstance<Type, internal::DestructorAtExitLazyInstanceTraits<Type>>
 		 DestructorAtExit;
 
-	 LazyInstance() : private_instance_(nullptr) {}
-
+	 LazyInstance() : private_instance_{nullptr} {}
 	 Type& Get() {
 		 return *Pointer();
 	 }

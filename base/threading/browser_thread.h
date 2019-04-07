@@ -32,7 +32,7 @@ class BASE_EXPORT BrowserThread {
  public:
 	 // 这个ID代表着你将要创建什么类型的线程，并且会对应的创建对应的message_loop.
 	 enum ID {
-		 UI,
+		 UI = 0,
 		 IO,
 		 MSG,
 		 DB,

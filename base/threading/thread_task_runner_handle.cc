@@ -13,6 +13,8 @@
 //#include "base/logging.h"
 #include "base/sequenced_task_runner_handle.h"
 
+#include "base/threading/browser_thread.h"
+
 
 
 namespace base {
@@ -47,8 +49,7 @@ ThreadTaskRunnerHandle::ThreadTaskRunnerHandle(
 	/*auto temp = thread_task_runner_tls.Get();
 	temp = this;*/
 	*thread_task_runner_tls.private_instance_ = this;
-
-	auto a = thread_task_runner_tls.Get();
+	//thread_task_runner_tls.private_instance_.store(&this);
 
 	DCHECK(SequencedTaskRunnerHandle::IsSet());
 

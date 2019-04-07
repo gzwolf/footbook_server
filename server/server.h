@@ -46,6 +46,7 @@ class Server {
     std::list<std::shared_ptr<TalkToClient>> clients_;
     boost::asio::ip::tcp::acceptor acceptor_;
     CampusChatSubThread major_thread_;
+    CampusChatSubThread db_thread_;
 
     DISALLOW_COPY_AND_ASSIGN(Server);
 };
