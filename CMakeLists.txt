@@ -39,11 +39,15 @@ set(SERVER_SRC
 
 set(MAIN_SRC campus_chat_main.cc)
 
-set(ALL_SRC ${SERVER_SRC} ${MAIN_SRC} server/port.h)
+set(ALIBABA_SMS_SRC
+        server/alibaba_sms/sms.h
+        server/alibaba_sms/sms.cc)
+
+set(ALL_SRC ${SERVER_SRC} ${ALIBABA_SMS_SRC} ${MAIN_SRC} server/port.h)
 
 add_subdirectory(base)
 
 #利用SRC生成一个可执行文件
 add_executable(${PROJECT_NAME} ${ALL_SRC})
 
-target_link_libraries(${PROJECT_NAME} glog base_lib boost_thread-mt boost_system boost_filesystem)
+target_link_libraries(${PROJECT_NAME} glog base_lib boost_thread-mt boost_system boost_filesystem ssl crypto)

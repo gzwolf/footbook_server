@@ -23,6 +23,9 @@ void EncodeFixed64(char* dst, uint64_t value);
 uint32_t DecodeFixed32(const char *ptr);
 uint64_t  DecodeFixed64(const char* ptr);
 
+std::string UrlEncode(const std::string& sz_encode);
+std::string Base64Encode(const unsigned char* data,int data_byte);
+
 }   // namespace cchat
 
 #endif //CAMPUS_CHAT_CONFIG_H

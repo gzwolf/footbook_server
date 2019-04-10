@@ -70,4 +70,74 @@ void PutFixed64(std::string* dst, uint64_t value) {
     EncodeFixed64(buf, value);
     dst->append(buf, sizeof(buf));
 }
+
+std::string UrlEncode(const std::string& sz_encode) {
+    std::string src = sz_encode;
+    char hex[] = "0123456789ABCDEF";
+    std::string dst;
+
+    for (size_t i = 0; i < src.size(); ++i) {
+        unsigned char cc = src[i];
+        if ((cc >= 'A' && cc <= 'Z')
+            || (cc >= 'a' && cc <= 'z')
+            || (cc >= '0' && cc <= '9')
+            || cc == '.'
+            || cc == '_'
+            || cc == '-'
+            || cc == '*') {
+            if (cc == ' ') {
+                dst += "+";
+            } else {
+                dst += cc;
+            }
+        } else {
+            unsigned char c = static_cast<unsigned char>(src[i]);
+            dst += '%';
+            dst += hex[c / 16];
+            dst += hex[c % 16];
+
+        }
+    }
+    return dst;
+}
+
+std::string Base64Encode(const unsigned char* data, int data_byte) {
+    //编码表
+    const char encode_table[]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghi"
+                             "jklmnopqrstuvwxyz0123456789+/";
+    //返回值
+    std::string str_encode;
+    unsigned char tmp[4] = {0};
+    int line_length = 0;
+    for(int i=0; i<(int)(data_byte / 3); i++) {
+            tmp[1] = *data++;
+            tmp[2] = *data++;
+            tmp[3] = *data++;
+            str_encode += encode_table[tmp[1] >> 2];
+            str_encode += encode_table[((tmp[1] << 4) | (tmp[2] >> 4)) & 0x3F];
+            str_encode += encode_table[((tmp[2] << 2) | (tmp[3] >> 6)) & 0x3F];
+            str_encode += encode_table[tmp[3] & 0x3F];
+            if(line_length+=4, line_length==76) {
+                str_encode+="\r\n";line_length=0;
+            }
+    }
+    //对剩余数据进行编码
+    int Mod=data_byte % 3;
+    if(Mod == 1) {
+        tmp[1] = *data++;
+        str_encode += encode_table[(tmp[1] & 0xFC) >> 2];
+        str_encode += encode_table[((tmp[1] & 0x03) << 4)];
+        str_encode += "==";
+    } else if(Mod==2) {
+        tmp[1] = *data++;
+        tmp[2] = *data++;
+        str_encode += encode_table[(tmp[1] & 0xFC) >> 2];
+        str_encode += encode_table[((tmp[1] & 0x03) << 4) | ((tmp[2] & 0xF0) >> 4)];
+        str_encode += encode_table[((tmp[2] & 0x0F) << 2)];
+        str_encode += "=";
+    }
+
+    return str_encode;
+}
+
 }   // namespace cchat
