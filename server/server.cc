@@ -8,7 +8,7 @@
 
 #include "server/talk_to_client.h"
 
-namespace cchat {
+namespace footbook {
 
 namespace {
 Server* g_instance = nullptr;
@@ -20,7 +20,8 @@ Server::Server(std::size_t thread_count,
       io_service_pool_(thread_count),
       acceptor_(io_service_pool_.get_io_service()),
       major_thread_(CampusChatThread::MSG),
-      db_thread_(CampusChatThread::DB) {
+      db_thread_(CampusChatThread::DB),
+      http_thread_(CampusChatThread::HTTP) {
     if (g_instance == nullptr)
         g_instance = this;
     acceptor_.open(endpoint.protocol());
@@ -36,8 +37,10 @@ Server *Server::Currnet() {
 void Server::Start() {
     major_thread_.Start();
     db_thread_.Start();
+    http_thread_.Start();
     major_thread_.RegisterAsBrowserThread();
     db_thread_.RegisterAsBrowserThread();
+    http_thread_.RegisterAsBrowserThread();
     Accept();
 }
 
@@ -47,6 +50,7 @@ void Server::Run() {
 
 void Server::Stop() {
     major_thread_.Stop();
+    db_thread_.Stop();
     io_service_pool_.Stop();
 }
 
@@ -85,4 +89,4 @@ Server::~Server() {
 
 
 
-}   // namespace cchat
+}   // namespace footbook

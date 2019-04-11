@@ -9,7 +9,7 @@
 #include "talk_to_client.h"
 
 
-namespace cchat {
+namespace footbook {
 
 TalkToClient::TalkToClient(boost::asio::io_service &io_service,
                            Server& server)
@@ -118,4 +118,4 @@ void TalkToClient::Context::OnRegister(const Status &status) {
     Listener::OnRegister(status);
 }
 
-}   // namesapce cchat
+}   // namesapce footbook

@@ -11,7 +11,7 @@
 #include <tiff.h>
 #include <glog/logging.h>
 
-namespace cchat {
+namespace footbook {
 
 class Message {
  public:

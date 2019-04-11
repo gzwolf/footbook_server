@@ -10,7 +10,7 @@
 #include "alias.h"
 #include "base/threading/browser_thread.h"
 
-namespace cchat {
+namespace footbook {
 
 namespace {
 constexpr int kUserNameMaximumSize = 64;
@@ -67,4 +67,4 @@ void Client::OnGetDBCompleteForLogin(const std::string& user_name,
 
 }
 
-}   // namespace cchat
+}   // namespace footbook

@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 
-namespace cchat {
+namespace footbook {
 
 Status::Status(const Status &rhs) {
     state_ = (rhs.state_ == nullptr) ? nullptr : CopyState(rhs.state_);
@@ -40,6 +40,9 @@ std::string Status::ToString() const {
             break;
         case kMsgError:
             type = "Msg Error: ";
+            break;
+        case kHttpError:
+            type = "Http Error: ";
             break;
         case kInvalidAccount:
             type = "Invalid Account: ";
@@ -82,4 +85,4 @@ const char *Status::CopyState(const char *state) {
     memcpy(result, state, size + 5);
     return result;
 }
-}   // namespace cchat
+}   // namespace footbook

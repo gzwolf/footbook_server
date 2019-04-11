@@ -10,6 +10,7 @@
 
 #include "server/config.h"
 #include "glog/logging.h"
+#include "server/http/http_boost.h"
 
 namespace {
 
@@ -37,20 +38,26 @@ std::string Sgin(char key[], const char * data) {
     for(int i = 0; i < digest_len; i++)
         sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
 
-    return cchat::Base64Encode(digest,digest_len);
+    return footbook::Base64Encode(digest,digest_len);
 }
 
 }   // namespace
 
-namespace cchat {
+namespace footbook {
 
-bool SMS::Send(const std::string &phone_number, const std::string &code) {
-    SMSHttpArg sms_http(phone_number);
+Status SMS::Send(const std::string &phone_number, const std::string &code) {
+    SMSHttpArg sms_http(phone_number, code);
     InitForAliyuSmsHttp(&sms_http);
     std::string url;
     GeneratorURL(sms_http, &url);
     LOG(INFO) << "URL = " << url;
-    return false;
+    std::string responce;
+    Status status = http::Get(url, &responce);
+    if (!status.ok())
+        return status;
+    // 处理响应数据
+    LOG(INFO) << responce;
+    return Status();
 }
 
 void SMS::InitForAliyuSmsHttp(SMS::SMSHttpArg *sms_http) {
@@ -63,7 +70,7 @@ void SMS::InitForAliyuSmsHttp(SMS::SMSHttpArg *sms_http) {
     sms_http->region_id = "cn-hangzhou";
     sms_http->sign_name = "大学生快修";
     sms_http->template_code = "SMS_98465010";
-    sms_http->template_param = "{\"code\":\"362387\"}";
+    //sms_http->template_param = "{\"code\":\"362387\"}";
     sms_http->address = "dysmsapi.aliyuncs.com";
     sms_http->port = 80;
 
@@ -73,10 +80,10 @@ void SMS::InitForAliyuSmsHttp(SMS::SMSHttpArg *sms_http) {
     time_t raw_time;
     struct tm* time_info;
     time(&raw_time);
-    time_info = gmtime(&raw_time);  
+    time_info = gmtime(&raw_time);
     strftime(time_stamp,sizeof(time_stamp),"%Y-%m-%dT%H:%M:%SZ",time_info);
     sms_http->time_stamp = time_stamp;
-    snprintf(signature_nonce, 16 - 1 ,"%ld",time(NULL));
+    snprintf(signature_nonce, 16 - 1 ,"%ld",time(nullptr));
     sms_http->signature_nonce = signature_nonce;
 }
 

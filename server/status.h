@@ -8,7 +8,7 @@
 #include <string>
 #include <algorithm>
 
-namespace cchat {
+namespace footbook {
 
 class Status final {
  public:
@@ -25,6 +25,9 @@ class Status final {
     static Status MsgError(const std::string& msg) {
         return Status(kMsgError, msg);
     }
+    static Status HttpError(const std::string& msg) {
+        return Status(kHttpError, msg);
+    }
     static Status InValidAccount(const std::string& msg) {
         return Status(kInvalidAccount, msg);
     }
@@ -34,6 +37,7 @@ class Status final {
 
     bool ok() const { return state_ == nullptr; }
     bool IsMsgError() const { return code() == kMsgError; }
+    bool IsHttpError() const { return code() == kHttpError; }
     bool IsInvalidAccount() const { return code() == kInvalidAccount; }
     bool IsInvalidPassword() const { return code() == kInvalidPassword; }
 
@@ -48,8 +52,9 @@ class Status final {
     enum Code {
         kOk = 0,
         kMsgError = 1,
-        kInvalidAccount = 2,
-        kInvalidPassword = 3
+        kHttpError = 2,
+        kInvalidAccount = 3,
+        kInvalidPassword = 4
     };
 
     Code code() const {
@@ -60,6 +65,6 @@ class Status final {
     static const char* CopyState(const char* s);
 };
 
-}   // namespace cchat
+}   // namespace footbook
 
 #endif //CAMPUS_CHAT_STATUS_H

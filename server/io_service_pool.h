@@ -10,7 +10,7 @@
 
 #include <boost/asio.hpp>
 
-namespace cchat {
+namespace footbook {
 
 class IOServicePool {
  public:
@@ -41,7 +41,7 @@ class IOServicePool {
     mutable std::size_t next_io_service_;
 };
 
-}   // namespace cchat
+}   // namespace footbook
 
 
 #endif //CAMPUS_CHAT_IO_SERVICE_POOL_H

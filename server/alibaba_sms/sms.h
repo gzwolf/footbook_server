@@ -7,11 +7,13 @@
 
 #include <string>
 
-namespace cchat {
+#include "server/status.h"
+
+namespace footbook {
 
 class SMS {
  public:
-    bool Send(const std::string &phone_number,
+    Status Send(const std::string &phone_number,
               const std::string &code);
 
  protected:
@@ -56,8 +58,10 @@ class SMS {
         // 外部流水扩展字段
         std::string out_id;
 
-        explicit SMSHttpArg(const std::string& number)
-            : phone_number(number) {}
+        explicit SMSHttpArg(const std::string& number, const std::string& code)
+            : phone_number(number) {
+            template_param = "{\"code\":\"" + code + "\"}";
+        }
     };
 
     void InitForAliyuSmsHttp(SMSHttpArg *sms_http);
@@ -65,7 +69,7 @@ class SMS {
     void GeneratorURL(const SMSHttpArg &sms_http, std::string *url);
 };
 
-}   // namespace cchat
+}   // namespace footbook
 
 
 #endif //CAMPUS_CHAT_SMS_H

@@ -13,14 +13,14 @@
 
 #define LOGDIR "./LOG"
 
-namespace cchat_log {
+namespace footbook {
 
 GlogHelper::GlogHelper(const char * program) {
 	google::InitGoogleLogging(program);
 
-    std::string info_name = "/[upupoo]info_";
-    std::string warning_name = "/[upupoo]warning_";
-    std::string error_name = "/[upupoo]error_";
+    std::string info_name = "/[footbook]info_";
+    std::string warning_name = "/[footbook]warning_";
+    std::string error_name = "/[footbook]error_";
 
 
 	boost::filesystem::create_directory(LOGDIR);
@@ -35,7 +35,7 @@ GlogHelper::GlogHelper(const char * program) {
 	FLAGS_logbufsecs = 0;        //缓冲日志输出，默认为30秒，此处改为立即输出
 	FLAGS_max_log_size = 100;  //最大日志大小为 100MB
 	FLAGS_stop_logging_if_full_disk = true;     //当磁盘被写满时，停止日志输出
-	google::SetLogFilenameExtension("cchat_");     //设置文件名扩展，如平台？或其它需要区分的信息
+	google::SetLogFilenameExtension("fb_");     //设置文件名扩展，如平台？或其它需要区分的信息
 	google::InstallFailureSignalHandler();      //捕捉 core dumped
 	//google::InstallFailureWriter(&SignalHandle);    //默认捕捉 SIGSEGV 信号信息输出会输出到 stderr，可以通过下面的方法自定义输出>方式：
 }

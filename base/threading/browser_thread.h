@@ -36,6 +36,7 @@ class BASE_EXPORT BrowserThread {
 		 IO,
 		 MSG,
 		 DB,
+		 HTTP,
 		 ID_COUNT
 	 };
 

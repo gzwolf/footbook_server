@@ -10,7 +10,7 @@
 
 #include "server/status.h"
 
-namespace cchat {
+namespace footbook {
 
 class Client {
     using LoginCallback = std::function<void(const Status&)>;

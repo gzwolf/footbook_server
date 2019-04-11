@@ -56,6 +56,9 @@ void BrowserProcessSubThread::Run(base::RunLoop * run_loop) {
 	case BrowserThread::DB:
 		UIThreadRun(run_loop);
 		break;
+	case BrowserThread::HTTP:
+		UIThreadRun(run_loop);
+		break;
 	case BrowserThread::ID_COUNT:
 		break;
 	}

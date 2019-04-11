@@ -43,7 +43,10 @@ set(ALIBABA_SMS_SRC
         server/alibaba_sms/sms.h
         server/alibaba_sms/sms.cc)
 
-set(ALL_SRC ${SERVER_SRC} ${ALIBABA_SMS_SRC} ${MAIN_SRC} server/port.h)
+set(HTTP_SRC server/http/http_base.h
+        server/http/http_base.cc server/http/http_boost.cc server/http/http_boost.h)
+
+set(ALL_SRC ${SERVER_SRC} ${ALIBABA_SMS_SRC} ${MAIN_SRC} ${HTTP_SRC} server/port.h)
 
 add_subdirectory(base)
 

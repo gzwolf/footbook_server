@@ -152,8 +152,9 @@ const char * BrowserThreadImpl::GetThreadName(BrowserThread::ID thread) {
 	static const char* const kBrowserThreadNames[BrowserThread::ID_COUNT] = {
 		"",                 // UI (name assembled in browser_main_loop.cc).
 		"Chrome_IOThread",  // IO
-		"CampusChat_MsgThread",
-		"CampusChat_DBThread"
+		"Footbook_MsgThread",
+		"Footbook_DBThread",
+		"Footbook_HTTPThread"
 	};
 
 	if (BrowserThread::UI < thread && thread < BrowserThread::ID_COUNT)

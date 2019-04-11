@@ -7,7 +7,7 @@
 
 #include "server/status.h"
 
-namespace cchat {
+namespace footbook {
 
 class Message;
 
@@ -23,7 +23,7 @@ class Listener {
     virtual ~Listener() = default;
 };
 
-}   // namespace cchat
+}   // namespace footbook
 
 
 #endif //CAMPUS_CHAT_LISTENER_H

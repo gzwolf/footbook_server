@@ -13,7 +13,7 @@
 #include "base/threading/browser_process_sub_thread.h"
 #include "server/alias.h"
 
-namespace cchat {
+namespace footbook {
 
 class TalkToClient;
 
@@ -47,6 +47,7 @@ class Server {
     boost::asio::ip::tcp::acceptor acceptor_;
     CampusChatSubThread major_thread_;
     CampusChatSubThread db_thread_;
+    CampusChatSubThread http_thread_;
 
     DISALLOW_COPY_AND_ASSIGN(Server);
 };

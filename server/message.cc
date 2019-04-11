@@ -8,7 +8,7 @@
 
 #include "server/config.h"
 
-namespace cchat {
+namespace footbook {
 
 namespace {
 constexpr std::size_t kHeaderSize = 20;
@@ -126,4 +126,4 @@ bool DecodeMessage(const std::string& str, Message* msg) {
 }
 
 
-}   // namespace cchat
+}   // namespace footbook

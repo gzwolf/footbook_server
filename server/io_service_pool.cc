@@ -6,7 +6,7 @@
 
 #include <thread>
 
-namespace cchat {
+namespace footbook {
 
 IOServicePool::IOServicePool(std::size_t count)
     : next_io_service_(0) {
@@ -57,6 +57,6 @@ boost::asio::io_service& IOServicePool::get_io_service(
     return *io_services_[index];
 }
 
-}   // namespace cchat.
+}   // namespace footbook.
 
 #include "io_service_pool.h"

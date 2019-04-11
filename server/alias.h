@@ -12,9 +12,9 @@ class BrowserThread;
 class BrowserProcessSubThread;
 }   // namespace sun
 
-namespace cchat {
+namespace footbook {
 using CampusChatThread = sun::BrowserThread;
 using CampusChatSubThread = sun::BrowserProcessSubThread;
-}   // namespace cchat
+}   // namespace footbook
 
 #endif //CAMPUS_CHAT_ALIAS_H

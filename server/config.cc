@@ -5,7 +5,7 @@
 
 #include "server/port.h"
 
-namespace cchat {
+namespace footbook {
 
 void EncodeFixed32(char *buf, uint32_t value) {
     if (port::IsLittleEndian()) {
@@ -140,4 +140,4 @@ std::string Base64Encode(const unsigned char* data, int data_byte) {
     return str_encode;
 }
 
-}   // namespace cchat
+}   // namespace footbook

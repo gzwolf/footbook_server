@@ -11,7 +11,7 @@
 
 #include <glog/logging.h>
 
-namespace cchat_log {
+namespace footbook {
 
 class GlogHelper final {
  public:

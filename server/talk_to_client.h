@@ -16,7 +16,7 @@
 #include "server/status.h"
 
 
-namespace cchat {
+namespace footbook {
 
 namespace {
 const int kTextBufferSize = 4096;

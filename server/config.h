@@ -9,7 +9,7 @@
 
 #include <tiff.h>
 
-namespace cchat {
+namespace footbook {
 
 // 将value放入到dst中
 void PutFixed32(std::string* dst, uint32_t value);
@@ -26,6 +26,6 @@ uint64_t  DecodeFixed64(const char* ptr);
 std::string UrlEncode(const std::string& sz_encode);
 std::string Base64Encode(const unsigned char* data,int data_byte);
 
-}   // namespace cchat
+}   // namespace footbook
 
 #endif //CAMPUS_CHAT_CONFIG_H
