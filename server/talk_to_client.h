@@ -10,6 +10,7 @@
 #include <boost/asio.hpp>
 
 #include "base/macor.h"
+#include "base/at_exit.h"
 #include "server/message.h"
 #include "server/listener.h"
 #include "server/server.h"
@@ -58,6 +59,7 @@ class TalkToClient : public std::enable_shared_from_this<TalkToClient> {
         void OnBadMessageReceived(const Message& message) override;
         void OnLogin(const Status& status) override;
         void OnRegister(const Status& status) override;
+        void OnSendSMS(const Status& status) override;
      protected:
         ~Context() override;
 

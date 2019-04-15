@@ -9,6 +9,7 @@
 #include "glog/logging.h"
 #include "alias.h"
 #include "base/threading/browser_thread.h"
+#include "server/alibaba_sms/sms.h"
 
 namespace footbook {
 
@@ -21,6 +22,12 @@ constexpr int kPasswordMinimumSize = 8;
 
 std::vector<std::string> DBSelect(const std::string& str) {
     return std::vector<std::string>();
+}
+
+
+
+Status SendMsg(const std::string& str, int) {
+    return Status();
 }
 
 void Client::Login(const std::string &user_name,

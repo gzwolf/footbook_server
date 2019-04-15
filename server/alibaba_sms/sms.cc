@@ -8,8 +8,9 @@
 #include <sstream>
 #include <openssl/hmac.h>
 
-#include "server/config.h"
+#include "base/singleton.h"
 #include "glog/logging.h"
+#include "server/config.h"
 #include "server/http/http_boost.h"
 
 namespace {
@@ -45,6 +46,11 @@ std::string Sgin(char key[], const char * data) {
 
 namespace footbook {
 
+SMS* SMS::GetInstance() {
+    return base::Singleton<SMS,
+            base::LeakySingletonTraits<SMS>>::get();
+}
+
 Status SMS::Send(const std::string &phone_number, const std::string &code) {
     SMSHttpArg sms_http(phone_number, code);
     InitForAliyuSmsHttp(&sms_http);
@@ -56,8 +62,8 @@ Status SMS::Send(const std::string &phone_number, const std::string &code) {
     if (!status.ok())
         return status;
     // 处理响应数据
-    LOG(INFO) << responce;
-    return Status();
+    LOG(INFO) << "responce = " <<responce;
+    return Status::Ok();
 }
 
 void SMS::InitForAliyuSmsHttp(SMS::SMSHttpArg *sms_http) {
@@ -126,6 +132,7 @@ void SMS::GeneratorURL(const SMS::SMSHttpArg &sms_http, std::string *url) {
     url->clear();
     *url = "http://" + sms_http.address + "/?Signature=" + str_url3 + "&" + ss.str();
 }
+
 
 
 

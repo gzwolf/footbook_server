@@ -19,14 +19,8 @@ class Message {
         kGeneralChat = 0x1234,
         kGroupChat,
         kSignIn,
-        kRegister
-    };
-
-    enum Status {
-        kSuccess = 0x01,
-        kPasswordError,
-        kUsernameError,
-        kMsgFormatError
+        kRegister,
+        kSendVerificationCode
     };
 
     explicit Message(uint32_t type);

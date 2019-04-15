@@ -51,6 +51,7 @@ void Server::Run() {
 void Server::Stop() {
     major_thread_.Stop();
     db_thread_.Stop();
+    http_thread_.Stop();
     io_service_pool_.Stop();
 }
 

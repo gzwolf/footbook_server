@@ -18,6 +18,7 @@ class Listener {
     virtual void OnBadMessageReceived(const Message& message) {}
     virtual void OnLogin(const Status& status) {}
     virtual void OnRegister(const Status& status) {}
+    virtual void OnSendSMS(const Status& sttus) {}
 
  //protected:
     virtual ~Listener() = default;

@@ -3,9 +3,15 @@
 //
 
 #include "server/talk_to_client.h"
+
+#include <functional>
+
 #include "base/threading/browser_thread.h"
 #include "server/alias.h"
 #include "server/client.h"
+#include "server/alibaba_sms/sms.h"
+#include "server/port.h"
+#include "server/limit.h"
 #include "talk_to_client.h"
 
 
@@ -84,6 +90,17 @@ bool TalkToClient::Context::OnMessageReceived(const Message &message) {
         }
         case Message::kRegister:
             break;
+        case Message::kSendVerificationCode: {
+            std::string phone_number;
+            auto code = port::Random(Limit<int>(10000, 999999));
+            CampusChatThread::PostTaskAndReplyWithResult<Status, Status>(
+                    CampusChatThread::HTTP,
+                    FROM_HERE,
+                    std::bind(&SMS::Send, SMS::GetInstance(),
+                    phone_number, std::to_string(code)),
+                    std::bind(&Listener::OnSendSMS, this, std::placeholders::_1));
+            break;
+        }
         default:
             return false;
     }
@@ -116,6 +133,10 @@ void TalkToClient::Context::OnLogin(const Status &status) {
 
 void TalkToClient::Context::OnRegister(const Status &status) {
     Listener::OnRegister(status);
+}
+
+void TalkToClient::Context::OnSendSMS(const Status &status) {
+    Listener::OnSendSMS(status);
 }
 
 }   // namesapce footbook

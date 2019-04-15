@@ -8,15 +8,18 @@
 #include <string>
 
 #include "server/status.h"
+#include "base/macor.h"
 
 namespace footbook {
 
 class SMS {
  public:
+    static SMS* GetInstance();
+
     Status Send(const std::string &phone_number,
               const std::string &code);
 
- protected:
+ private:
     // 阿里云短信服务的http请求参数结构
     struct SMSHttpArg {
         // http 服务器地址
@@ -67,6 +70,9 @@ class SMS {
     void InitForAliyuSmsHttp(SMSHttpArg *sms_http);
 
     void GeneratorURL(const SMSHttpArg &sms_http, std::string *url);
+
+    //SMS() = default;
+    //DISALLOW_COPY_AND_ASSIGN(SMS);
 };
 
 }   // namespace footbook

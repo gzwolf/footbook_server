@@ -66,12 +66,18 @@ class Singleton {
 						 std::memory_order_relaxed);
     }
 
-    static std::atomic<Type*> instance_;    
+    static std::atomic<Type*> instance_;
 };
 
+/*
 template <typename Type, typename Traits, typename DifferentiatingType>
 std::atomic<Type*> Singleton<Type, Traits, DifferentiatingType>::instance_ =
 				reinterpret_cast<Type*>(base::internal::kLazyDefaultInstanceState);
+				*/
+
+template <typename Type, typename Traits, typename DifferentiatingType>
+std::atomic<Type*> Singleton<Type, Traits, DifferentiatingType>::instance_ =
+        { reinterpret_cast<Type*>(base::internal::kLazyDefaultInstanceState) };
 
 
 }
