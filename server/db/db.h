@@ -17,39 +17,7 @@
 namespace footbook {
 namespace db {
 
-struct Profile {
-   std::string account;
-   std::string name;
-   std::string school;
-   std::string student_num;
-   int sex;
-   std::string faculty;
-   std::string specialty;
-   std::string grade;
-   std::string entrance_time;
-   std::string nick_name;
-   std::string location;
-   std::string wechat;
-};
 
-struct Idea {
-    int title_id;
-    std::string release_account;
-    std::string title;
-    std::string content;
-    std::string dynamic_time;
-    uint64_t like;
-    uint64_t dislike;
-};
-
-struct Comment {
-    int id;
-    int title_id;
-    std::string account;
-    std::string time;
-    uint64_t like;
-    uint64_t dislike;
-};
 
 class DB {
  public:
@@ -57,22 +25,24 @@ class DB {
 
     Status Open(const char* db_name);
 
-    Status Put(Table* table);
+    template <typename TableStruct>
+    Status Put(TableType table_type, const TableStruct& value);
 
-    template <typename TableStruct, typename Flags,typename Key>
-    Status Get(Table* table, Flags flags, const Key& key,
+    template <typename TableStruct, typename Flags, typename Key>
+    Status Get(TableType table_type, Flags flags, const Key& key,
             std::vector<TableStruct>* value);
 
     template <typename Flags, typename T>
-    Status Delete(Table* table, Flags flags, const T& value);
+    Status Delete(TableType table_type, Flags flags, const T& value);
 
     template <typename Flags, typename Value>
-    Status Update(Table* table, Flags flags, const Value& old_value, const Value& new_value);
+    Status Update(TableType table, Flags flags,
+            const Value& old_value, const Value& new_value);
 
  private:
     DB() = default;
 
-
+    std::map<TableType, std::unique_ptr<Table*>> tables_;
     DISALLOW_COPY_AND_ASSIGN(DB);
 
 };

@@ -58,7 +58,7 @@ set(HTTP_SRC
 
 set(DB_SRC
         server/db/mysql_interface.h
-        server/db/mysql_interface.cc server/db/db.cc server/db/db.h server/db/table.cc server/db/table.h)
+        server/db/mysql_interface.cc server/db/db.cc server/db/db.h server/db/table.cc server/db/table.h server/db/table_struct.h)
 
 set(ALL_SRC ${SERVER_SRC} ${ALIBABA_SMS_SRC} ${MAIN_SRC} ${HTTP_SRC} ${DB_SRC} server/port.h)
 

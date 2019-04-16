@@ -129,5 +129,24 @@ void MysqlInterface::Close() {
     mysql_close(&mysqlinterface_);
 }
 
+bool MysqlInterface::IsExistTable(const std::string &table_name) {
+
+    result_ = mysql_list_tables(&mysqlinterface_, table_name.c_str());
+    MYSQL_ROW row;
+    int count = 0;
+    while((row = mysql_fetch_row(result_)) != NULL) {
+        printf("TABLE %d: %s\n",cnt,row[0]);
+        count++;
+    }
+
+    if (mysql_errno(&mysqlinterface_)) {  //mysql_fetch_row() failed due to an error
+        ErrorMysqlInfo();
+        return false;
+    }
+
+    if (count > 0)
+        return true;
+}
+
 }   // namespace db
 }   // namespace footbook
