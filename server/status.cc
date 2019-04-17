@@ -44,11 +44,17 @@ std::string Status::ToString() const {
         case kHttpError:
             type = "Http Error: ";
             break;
+        case kDBError:
+            type = "DB Error: ";
+            break;
         case kInvalidAccount:
             type = "Invalid Account: ";
             break;
         case kInvalidPassword:
             type = "Invalid Password: ";
+            break;
+        case kInvalidData:
+            type = "Invalid Data: ";
             break;
         default:
             snprintf(tmp, sizeof(tmp), "Unknown code(%d): ",

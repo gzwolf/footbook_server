@@ -4,82 +4,108 @@
 
 #include "table.h"
 
+#include <algorithm>
+
 #include "mysql_interface.h"
+#include "glog/logging.h"
 
 namespace footbook {
 namespace db {
 
+namespace {
+const char kProfileTableSuffix[] = "profile";
+const char kIdeaTableSuffix[] = "idea";
+const char kCommentTableSuffix[] = "comment";
+const char kTableSeparator = '_';
 
-class ProfileTable : public Table {
- public:
-    explicit ProfileTable(MysqlInterface* mysql)
-        : mysql_(mysql), Table() {}
-
-    bool IsExistTable(const std::string& table_name) override {
-        return mysql_->IsExistTable(table_name);
-    }
-
-    Status Create(const std::string& table_name) override {
-        if (mysql_->CreateTable(table_name)) {
-            return Status::Ok();
-        } else {
-            return Status::HttpError("Create table "
-            + table_name + "error : " + mysql_->GetLastError());
-        }
-    }
-
- protected:
-    ~ProfileTable() override {
-    }
-
- private:
-    Status DoGet(const std::string& table_name,
-                 int flags,
-                 const std::string& value,
-                 std::vector<std::vector<
-                 std::string>>* table_struct) override {
-        std::string signal_quotes = "\"";
-        std::string flags_name = FlagsToString(static_cast<ProfileFlags>(flags));
-        std::string sql = "select * from " + table_name + " where "
-                + flags_name + " = " + signal_quotes + value + signal_quotes;
-
-        std::vector <std::vector<std::string>> select_result;
-        bool result = mysql_->ReadData(sql.c_str(), select_result);
-
-        if (!result || select_result.empty())
-            return Status::HttpError(mysql_->GetLastError());
-        return Status::Ok();
-    }
-
-    Status DoPut(const std::string& table_name,
-                 const std::string& value) override {
-
-    }
-
-    Status DoDelete(const std::string& table_name,
-                    int flags,
-                    const std::string& value) override {
-
-    }
-
-    Status DoUpdate(const std::string& table_name,
-                    int flags, const std::string& old_value,
-                    const std::string& new_value) override {
-
-    }
-
-    MysqlInterface* mysql_;
-    DISALLOW_COPY_AND_ASSIGN(ProfileTable);
-};
+}
 
 std::unique_ptr<Table *> Table::New(TableType type) {
     return std::unique_ptr<Table *>();
+}
+
+bool Table::IsExistTable(const std::string &table_name) {
+   mysql_->IsExistTable(table_name);
+}
+
+Status Table::Create(const std::string &table_name) {
+    auto pos = table_name.find(kTableSeparator);
+    if (pos == std::string::npos)
+        return Status::InvalidData("table_name is invalid!");
+    std::string table_suffix = table_name.substr(pos + 1);
+    std::string sql;
+    if (table_suffix == kProfileTableSuffix) {
+        sql = ProfileCreateTableSql();
+    } else if (table_suffix == kIdeaTableSuffix) {
+        sql = IdeaCreateTableSql();
+    } else if (table_suffix == kCommentTableSuffix) {
+        sql = CommentCreateTableSql();
+    } else {
+        return Status::InvalidData("table_name is invaild!");
+    }
+
+    if (mysql_->CreateTable(sql))
+        return Status::DBError(mysql_->GetLastError());
+    return Status::Ok();
+}
+
+void Table::ToTableStruct(const std::vector<std::string> &str_vec,
+                          Profile *profile) {
+    DCHECK(str_vec.size() >= 12);
+
+    profile->account = str_vec.at(0);
+    profile->name = str_vec.at(1);
+    profile->school = str_vec.at(2);
+    profile->student_num = str_vec.at(3);
+    profile->sex = atoi(str_vec.at(4).c_str());
+    profile->faculty = str_vec.at(5);
+    profile->specialty = str_vec.at(6);
+    profile->grade = str_vec.at(7);
+    profile->entrance_time = str_vec.at(8);
+    profile->nick_name = str_vec.at(9);
+    profile->location = str_vec.at(10);
+    profile->wechat = str_vec.at(11);
+}
+
+
+
+void Table::ToTableStruct(const std::vector<std::string> &str_vec,
+                          Idea *idea) {
+    DCHECK(str_vec.size() >= 7);
+
+    idea->title_id = atoi(str_vec.at(0).c_str());
+    idea->release_account = str_vec.at(1);
+    idea->title = std::move(const_cast<std::string&>(str_vec[2]));
+    idea->content = std::move(const_cast<std::string&>(str_vec[3]));
+    idea->dynamic_time = str_vec.at(4);
+    idea->like = atoi(str_vec.at(5).c_str());
+    idea->dislike = atoi(str_vec.at(6).c_str());
+}
+
+void Table::ToTableStruct(const std::vector<std::string> &str_vec,
+                          Comment *comment) {
+    DCHECK(str_vec.size() >= 6);
+
+    comment->id = atoi(str_vec.at(0).c_str());
+    comment->title_id = atoi(str_vec.at(1).c_str());
+    comment->account = str_vec.at(2);
+    comment->time = str_vec.at(3);
+    comment->like = atoi(str_vec.at(4).c_str());
+    comment->dislike = atoi(str_vec.at(5).c_str());
 }
 
 Table::~Table() {
 
 }
 
+
+Table::Table(MysqlInterface *mysql)
+    : mysql_(mysql) {
+}
+
+std::unique_ptr<Table> Table::New(MysqlInterface *mysql) {
+    return std::unique_ptr<Table>(new Table(mysql));
+}
 
 
 }   // namespace db

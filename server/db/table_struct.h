@@ -6,11 +6,46 @@
 #define CAMPUS_CHAT_TABLE_STRUCT_H
 
 #include <string>
+#include <sstream>
 
 #include "server/status.h"
 
 namespace footbook {
 namespace db {
+
+enum class ProfileFlags {
+    kAccount,
+    kName,
+    kSchool,
+    kStudentNum,
+    kSex,
+    kFaculty,
+    kSpecialty,
+    kGrade,
+    kEntranceTime,
+    kNickName,
+    kLocation,
+    kWechat
+};
+
+enum class IdeaFlags {
+    kTitleId,
+    kReleaseAccount,
+    kTitle,
+    kContent,
+    kDynamicTime,
+    kLike,
+    kDislike
+};
+
+enum CommentFlags {
+    kId,
+    kTitleId,
+    kAccount,
+    kTime,
+    kLike,
+    kDislike
+};
 
 struct Profile {
     std::string account;
@@ -34,94 +69,122 @@ struct Profile {
        *table_name = school + "_profile";
        return Status::Ok();
     }
+
+    std::string ToInsertSql() const {
+        std::string sql = "(account, name, school, student_num, sex,"
+                          "faculty, specialty, grade, entrance_time,"
+                          "nick_name, location, wechat) values(";
+
+        std::string signal_quotes = "\"";
+        std::ostringstream ostr_sql;
+        ostr_sql << sql;
+        ostr_sql << signal_quotes << account << signal_quotes << ","
+                 << signal_quotes << name << signal_quotes << ","
+                 << signal_quotes << school << signal_quotes << ","
+                 << signal_quotes << student_num << signal_quotes << ","
+                 << sex << ","
+                 << signal_quotes << faculty << signal_quotes << ","
+                 << signal_quotes << specialty << signal_quotes << ","
+                 << signal_quotes << grade << signal_quotes << ","
+                 << signal_quotes << entrance_time << signal_quotes << ","
+                 << signal_quotes << nick_name << signal_quotes << ","
+                 << signal_quotes << location << signal_quotes << ","
+                 << signal_quotes << wechat << signal_quotes << ")";
+
+        return ostr_sql.str();
+    }
 };
 
-enum class ProfileFlags {
-    kAccount,
-    kName,
-    kSchool,
-    kStudentNum,
-    kSex,
-    kFaculty,
-    kSpecialty,
-    kGrade,
-    kEntranceTime,
-    kNickName,
-    kLocation,
-    kWechat
-};
+
+
+
 
 struct Idea {
     int title_id;
     std::string release_account;
-    std::string release_school;
     std::string title;
     std::string content;
     std::string dynamic_time;
-    uint64_t like;
-    uint64_t dislike;
+    int like;
+    int dislike;
 
     Status GetTableName(std::string* table_name) const {
-        if (release_school.empty())
-            return Status::MsgError("school is null!");
-        table_name->clear();
-        *table_name = release_school + "_idea";
         return Status::Ok();
+    }
+
+    std::string ToInsertSql() const {
+        std::string sql = "(title_id, release_account,"
+                          "title, content, dynamic_time, like,dislike) values(";
+        std::string signal_quotes = "\"";
+
+        std::ostringstream ostr_sql;
+
+        ostr_sql << sql;
+        ostr_sql << title_id << ","
+                 << signal_quotes << release_account << signal_quotes << ","
+                 << signal_quotes << title << signal_quotes << ","
+                 << signal_quotes << content << signal_quotes << ","
+                 << signal_quotes << dynamic_time << signal_quotes << ","
+                 << like << ","
+                 << dislike << ")";
+        return ostr_sql.str();
     }
 };
 
+
+
 struct Comment {
-    std::string release_school;
     int id;
     int title_id;
     std::string account;
     std::string time;
-    uint64_t like;
-    uint64_t dislike;
+    int like;
+    int dislike;
 
     Status GetTableName(std::string* table_name) const {
-        if (release_school.empty() || time.empty())
-            return Status::MsgError("school is null!");
-        table_name->clear();
-        *table_name = release_school + time + "_comment";
         return Status::Ok();
+    }
+
+    std::string ToInsertSql() const {
+        std::string sql = "(id, title_id, account, time, like, dislike)"
+                          " values(";
+        std::string signal_quotes = "\"";
+        std::ostringstream ostr_sql;
+
+        ostr_sql << sql;
+        ostr_sql << id << ","
+                 << title_id << ","
+                 << signal_quotes << account << signal_quotes << ","
+                 << signal_quotes << time << signal_quotes << ","
+                 << like << "," << dislike << ")";
+        return ostr_sql.str();
     }
 };
 
-std::string FlagsToString(const ProfileFlags& profile_flags) {
-    std::string res;
-    switch (profile_flags) {
-        case ProfileFlags::kAccount:
-            res = "account";
-            break;
-        case ProfileFlags::kName:
-            res = "name";
-            break;
-        case ProfileFlags::kSchool:
-            res = "school";
-            break;
-        case ProfileFlags::kStudentNum:
-            res = "student_num";
-        case ProfileFlags::kSex:
-            res = "sex";
-            break;
-        case ProfileFlags::kFaculty:
-            res = "faculty";
-            break;
-        case ProfileFlags::kSpecialty:
-            res = "specialty";
-            break;
-        case ProfileFlags::kNickName:
-            res = "nick_name";
-            break;
-        case ProfileFlags::kLocation:
-            res = "location";
-        case ProfileFlags::kWechat:
-            res = "wechat";
-        default:
-            throw std::runtime_error("profile_flags error");
-    }
-    return res;
+
+
+std::string FlagsToString(const ProfileFlags& profile_flags);
+std::string FlagsToString(const IdeaFlags& idea_flags);
+std::string FlagsToString(const CommentFlags& comment_flags);
+
+
+inline std::string ProfileCreateTableSql() {
+    return "(id varchar(16) PRIMARY KEY, name varchar(16), school varchar(40),"
+           " student_num varchar(16),sex int, faculty varchar(40), "
+           "specialty varchar(40), grade varchar(8), entrance_time varchar(16),"
+           "nick_name varchar(64), location varchar(64), wechat varchar(32))";
+}
+
+inline std::string IdeaCreateTableSql() {
+    return "(title_id varchar(32) PRIMARY KEY, release_account varchar(16),"
+           " title varchar(512), content varchar(64), dynamic_time varchar(64),"
+           " like int, dislike int)";
+}
+
+inline std::string CommentCreateTableSql() {
+    return "(id varchar(32) PRIMARY KEY, title_id varchar(32),"
+           " account varchar(16), time varchar(64), like int, "
+           "dislike int)";
 }
 
 }   // namespace db

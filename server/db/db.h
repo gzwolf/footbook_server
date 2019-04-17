@@ -17,8 +17,6 @@
 namespace footbook {
 namespace db {
 
-
-
 class DB {
  public:
     static DB* New();
@@ -40,9 +38,10 @@ class DB {
             const Value& old_value, const Value& new_value);
 
  private:
-    DB() = default;
+    DB();
 
-    std::map<TableType, std::unique_ptr<Table*>> tables_;
+    std::unique_ptr<Table> table_;
+    MysqlInterface mysql_;
     DISALLOW_COPY_AND_ASSIGN(DB);
 
 };

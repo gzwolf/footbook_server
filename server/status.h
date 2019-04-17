@@ -28,18 +28,26 @@ class Status final {
     static Status HttpError(const std::string& msg) {
         return Status(kHttpError, msg);
     }
+    static Status DBError(const std::string& msg) {
+        return Status(kDBError, msg);
+    }
     static Status InValidAccount(const std::string& msg) {
         return Status(kInvalidAccount, msg);
     }
     static Status InValidPassword(const std::string& msg) {
         return Status(kInvalidPassword, msg);
     }
+    static Status InvalidData(const std::string& msg) {
+        return Status(kInvalidData, msg);
+    }
 
     bool ok() const { return state_ == nullptr; }
     bool IsMsgError() const { return code() == kMsgError; }
     bool IsHttpError() const { return code() == kHttpError; }
+    bool IsDBError() const { return code() == kDBError; }
     bool IsInvalidAccount() const { return code() == kInvalidAccount; }
     bool IsInvalidPassword() const { return code() == kInvalidPassword; }
+    bool IsInvalidData() const { return code() == kInvalidData; }
 
     std::string ToString() const;
     uint32_t ToInt32() const;
@@ -53,8 +61,10 @@ class Status final {
         kOk = 0,
         kMsgError = 1,
         kHttpError = 2,
-        kInvalidAccount = 3,
-        kInvalidPassword = 4
+        kDBError = 3,
+        kInvalidAccount = 4,
+        kInvalidPassword = 5,
+        kInvalidData = 6
     };
 
     Code code() const {

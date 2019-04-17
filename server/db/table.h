@@ -12,6 +12,7 @@
 #include "base/macor.h"
 #include "server/db/table_struct.h"
 #include "server/status.h"
+#include "mysql_interface.h"
 
 namespace std {
 inline string to_string(string val) {
@@ -30,18 +31,10 @@ enum TableType {
 };
 
 
-template<typename TableStruct>
-void StringVecToTable(std::vector<std::string> str, TableStruct* table_struct);
-
-template <typename TableStruct>
-std::string TableToString(const TableStruct& table_struct);
-
-
 
 class Table {
  public:
-    static std::unique_ptr<Table*> New(TableType type);
-    Table() = default;
+    static std::unique_ptr<Table> New(MysqlInterface* mysql);
 
     template <typename Flags, typename Key, typename Value>
     Status Get(const std::string& table_name, Flags flags,
@@ -60,58 +53,78 @@ class Table {
     Status Update(const std::string& table_name, Flags flags,
             const Value& old_value, const Value& new_value);
 
-    virtual bool IsExistTable(const std::string& table_name) = 0;
-    virtual Status Create(const std::string& table_name) = 0;
+    bool IsExistTable(const std::string& table_name);
+    Status Create(const std::string& table_name);
+
+    ~Table();
 
  protected:
-    virtual ~Table() {}
-
+    explicit Table(MysqlInterface* mysql);
  private:
-    virtual Status DoGet(const std::string& table_name,
-                         int flags, const std::string& key,
-                         std::vector<std::vector<std::string>>* value) = 0;
-    virtual Status DoPut(const std::string& table_name,
-            const std::string& value) = 0;
-    virtual Status DoDelete(const std::string& table_name,
-            int flags, const std::string& value) = 0;
-    virtual Status DoUpdate(const std::string& table_name, int flags,
-            const std::string& old_value, const std::string& new_value) = 0;
+    void ToTableStruct(const std::vector<std::string>& str_vec,
+                        Profile* profile);
+    void ToTableStruct(const std::vector<std::string>& str_vec,
+                        Idea* idea);
+    void ToTableStruct(const std::vector<std::string>& str_vec,
+                        Comment* comment);
 
+    MysqlInterface* mysql_;
     DISALLOW_COPY_AND_ASSIGN(Table);
 };
 
 template<typename Flags, typename Key, typename Value>
 Status Table::Get(const std::string& table_name, Flags flags,
         const Key &key, std::vector<Value> *value_vec) {
-    std::vector<std::vector<std::string> > res_vec;
-    Status status = DoGet(static_cast<int>(flags), std::to_string(key), &res_vec);
-    // 将string 转换成 value
-    for (auto& res : res_vec) {
+    std::string signal_quotes = "\"";
+    std::string flags_name = FlagsToString(flags);
+    std::string sql = "select * from " + table_name + " where " + flags_name +
+            " = " + signal_quotes + std::to_string(key) + signal_quotes;
+
+    std::vector <std::vector<std::string>> select_result;
+    bool result = mysql_->ReadData(sql, select_result);
+
+    if (!result || select_result.empty())
+        return Status::HttpError(mysql_->GetLastError());
+    for (auto& vec : select_result) {
         Value value;
-        StringVecToTable(res, &value);
-        value_vec->push_back(value);
+        ToTableStruct(vec, &value);
+        value_vec->push_back(std::move(value));
     }
+    return Status::Ok();
 }
 
 template<typename Value>
 Status Table::Put(const std::string& table_name, const Value& value) {
-    return DoPut(TableToString(value));
+    std::string sql = "insert into " + table_name + value.ToInsertSql();
+
+    if (!mysql_->WriteData(sql))
+        return Status::HttpError(mysql_->GetLastError());
+    return Status::Ok();
 }
 
 template<typename Flags, typename Value>
 Status Table::Delete(const std::string& table_name,
         Flags flags, const Value &value) {
-    return DoDelete(static_cast<int>(flags), std::to_string(value));
+    std::string signal_quotes = "\"";
+    std::string sql = "delete from " + table_name + "where"
+            + FlagsToString(flags) + " = " + signal_quotes
+            + std::to_string(value) + signal_quotes;
+    if (!mysql_->DeleteData(sql))
+        return Status::HttpError(mysql_->GetLastError());
+    return Status::Ok();
 }
 
 template<typename Flags, typename Value>
 Status Table::Update(const std::string& table_name,Flags flags,
         const Value &old_value, const Value &new_value) {
-    return DoUpdate(static_cast<int>(flags), std::to_string(old_value),
-            std::to_string(new_value));
+    std::string signal_quotes = "\"";
+    std::string sql = "update into " + table_name + "set "
+            + FlagsToString(flags) + " = " + std::to_string(new_value)
+            + "where " + FlagsToString(flags) + " = " + std::to_string(old_value);
+    if (!mysql_->ModifyData(sql))
+        return Status::HttpError(mysql_->GetLastError());
+    return Status::Ok();
 }
-
-
 
 
 
