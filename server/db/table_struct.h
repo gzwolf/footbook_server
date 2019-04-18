@@ -177,7 +177,7 @@ inline std::string ProfileCreateTableSql() {
 
 inline std::string IdeaCreateTableSql() {
     return "(title_id varchar(32) PRIMARY KEY, release_account varchar(16),"
-           " title varchar(512), content varchar(64), dynamic_time varchar(64),"
+           " title varchar(1024), content varchar(64), dynamic_time varchar(64),"
            " like int, dislike int)";
 }
 

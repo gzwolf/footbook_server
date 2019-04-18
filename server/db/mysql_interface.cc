@@ -28,7 +28,7 @@ bool MysqlInterface::Connect(const char *sever, const char *user,
 }
 
 
-bool MysqlInterface::CreateDatabase(std::string &data_name) {
+bool MysqlInterface::CreateDatabase(const std::string &data_name) {
     std::string query_str = "create database if not exists";
     query_str += data_name;
 
@@ -134,8 +134,8 @@ bool MysqlInterface::IsExistTable(const std::string &table_name) {
     result_ = mysql_list_tables(&mysqlinterface_, table_name.c_str());
     MYSQL_ROW row;
     int count = 0;
-    while((row = mysql_fetch_row(result_)) != NULL) {
-        printf("TABLE %d: %s\n",cnt,row[0]);
+    while((row = mysql_fetch_row(result_)) != nullptr) {
+        printf("TABLE %d: %s\n",count,row[0]);
         count++;
     }
 
@@ -146,6 +146,7 @@ bool MysqlInterface::IsExistTable(const std::string &table_name) {
 
     if (count > 0)
         return true;
+    return false;
 }
 
 }   // namespace db

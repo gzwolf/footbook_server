@@ -20,12 +20,24 @@ const char kTableSeparator = '_';
 
 }
 
-std::unique_ptr<Table *> Table::New(TableType type) {
-    return std::unique_ptr<Table *>();
+std::string GetProfileTableName(const std::string& school) {
+    // Profile table name format : 汉口学院_profile
+    return school + kTableSeparator + kProfileTableSuffix;
+}
+
+std::string GetIdeaTableName(const std::string& school) {
+    // Idea table name format : 汉口学院_idea
+    return school + kTableSeparator + kIdeaTableSuffix;
+}
+
+std::string GetCommentTableName(const std::string& school,
+                                const std::string& time) {
+    // comment table name format : 汉口学院2020_comment
+    return school + time + kTableSeparator + kCommentTableSuffix;
 }
 
 bool Table::IsExistTable(const std::string &table_name) {
-   mysql_->IsExistTable(table_name);
+   return mysql_->IsExistTable(table_name);
 }
 
 Status Table::Create(const std::string &table_name) {
@@ -75,6 +87,8 @@ void Table::ToTableStruct(const std::vector<std::string> &str_vec,
 
     idea->title_id = atoi(str_vec.at(0).c_str());
     idea->release_account = str_vec.at(1);
+    // 这两行采用move操作，由于数据量有点大，如果所有字段都采用move操作
+    // 显得有点麻烦.
     idea->title = std::move(const_cast<std::string&>(str_vec[2]));
     idea->content = std::move(const_cast<std::string&>(str_vec[3]));
     idea->dynamic_time = str_vec.at(4);

@@ -24,7 +24,7 @@ class MysqlInterface {
                  const char *pass, const char *database, int port = 3306);
 
     // 数据库创建
-    bool CreateDatabase(std::string &data_name);
+    bool CreateDatabase(const std::string &data_name);
 
     // 创建表
     bool CreateTable(const std::string &table_name);
