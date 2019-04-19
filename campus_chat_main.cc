@@ -1,31 +1,10 @@
 #include <base/at_exit.h>
-#include "server/glog_helper.h"
-#include "server/server.h"
-#include "server/message.h"
-
-#include "server/alibaba_sms/sms.h"
+#include "footbook/glog_helper.h"
+#include "footbook/server.h"
+#include "footbook/message.h"
+#include "footbook/talk_to_client.h"
 
 int main(int argc, char* argv[]) {
-    // 测试消息编解码
-    std::string str = "I love you!";
-    footbook::Message msg(str);
-    msg.set_sender(123);
-    msg.set_receiver(0);
-    msg.set_status(3);
-    msg.set_type(0x1234);
-
-    std::string encode_str;
-    footbook::Message decode_msg;
-
-    footbook::EncodeMessage(msg, &encode_str);
-    footbook::DecodeMessage(encode_str, &decode_msg);
-
-    std::cout << decode_msg.payload_size() << "\nsender = "
-            << decode_msg.sender() << "\nreceiver = " << decode_msg.receiver()
-            << "\nstatus = " << decode_msg.status() << "payload = " << decode_msg.payload() << std::endl;
-
-
-
     // 初始化glog日志系统
     footbook::GlogHelper glog_helper(argv[0]);
 
@@ -37,6 +16,8 @@ int main(int argc, char* argv[]) {
     auto endpoint = boost::asio::ip::tcp::endpoint(
             boost::asio::ip::address::from_string(host), 9996);
     footbook::Server server(thread_count, endpoint);
+    boost::asio::io_service test_io;
+    footbook::TalkToClient::TalkToClientPtr client = footbook::TalkToClient::New(test_io, server);
     // 开始服务器程序
     server.Start();
     server.Run();
