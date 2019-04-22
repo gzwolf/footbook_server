@@ -1,7 +1,7 @@
 set(FOOTBOOK_TARGET "footbook_gtest")
 
 set(GTEST_SRCS
-  src/gtest-all.cc
+        src/gtest-all.cc
   )
 source_group(footbook_gtest FILES ${GTEST_SRCS})
 
