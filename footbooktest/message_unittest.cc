@@ -52,19 +52,19 @@ TEST(Message, PayloadTest) {
     std::string payload;
     std::string key = "user_name";
     std::string value = "17771611074";
-    EXPECT_TRUE(footbook::PutPadloadPart(key, value, &payload));
+    EXPECT_TRUE(footbook::PutPayloadPart(key, value, &payload));
 
     key.clear();
     value.clear();
     key = "password";
     value = "123456";
-    EXPECT_TRUE(footbook::PutPadloadPart(key, value, &payload));
+    EXPECT_TRUE(footbook::PutPayloadPart(key, value, &payload));
 
     key.clear();
     value.clear();
     key = "verification_code";
     value = "320123";
-    EXPECT_TRUE(footbook::PutPadloadPart(key, value, &payload));
+    EXPECT_TRUE(footbook::PutPayloadPart(key, value, &payload));
 
 
     key.clear();
@@ -74,10 +74,10 @@ TEST(Message, PayloadTest) {
           "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
           "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
     value = "320123";
-    EXPECT_FALSE(footbook::PutPadloadPart(key, value, &payload));
+    EXPECT_FALSE(footbook::PutPayloadPart(key, value, &payload));
 
     std::map<std::string, std::string> res;
-    EXPECT_TRUE(footbook::DecodePadload(payload, &res));
+    EXPECT_TRUE(footbook::DecodePayload(payload, &res));
 
     EXPECT_EQ(res.size(), 3);
     EXPECT_EQ(res["user_name"], "17771611074");

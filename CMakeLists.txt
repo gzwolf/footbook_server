@@ -4,7 +4,7 @@ cmake_policy(SET CMP0012 NEW)
 
 
 #项目名称
-project(campus_chat)
+project(footbook_server)
 
 #支持C++11
 add_definitions(-std=c++14)
@@ -12,7 +12,7 @@ add_definitions(-std=c++14)
 set(INC_MYSQL /usr/local/Cellar/mysql/5.7.20/include/mysql/)
 set(LINK_MYSQL /usr/local/Cellar/mysql/5.7.20/lib/)
 set(INC_DIR /usr/local/include)
-set(INC_GTEST ./footbook/gtest/include)
+set(INC_GTEST footbook/third_party/gtest/include)
 set(LINK_DIR /usr/local/lib)
 
 include_directories(./)
@@ -49,7 +49,7 @@ set(SERVER_SRC
 
 if (LEVELDB_BUILD_TESTS)
     set(MAIN_SRC footbooktest/test_main.cc)
-    set(TEST_SRC footbooktest/message_unitest.cc)
+    set(TEST_SRC footbooktest/message_unittest.cc footbooktest/port_unittest.cc footbooktest/limit_unittest.cc footbooktest/sms_unittest.cc footbooktest/db_unittest.cc)
 else()
     set(MAIN_SRC campus_chat_main.cc)
     set(TEST_SRC)
@@ -78,10 +78,11 @@ set(DB_SRC
 set(ALL_SRC ${SERVER_SRC} ${ALIBABA_SMS_SRC} ${MAIN_SRC} ${HTTP_SRC} ${DB_SRC} ${TEST_SRC} footbook/port.h)
 
 add_subdirectory(footbook/base)
-add_subdirectory(footbook/gtest)
+add_subdirectory(footbook/third_party/gtest)
+add_subdirectory(footbook/third_party/leveldb)
 
 #利用SRC生成一个可执行文件
 add_executable(${PROJECT_NAME} ${ALL_SRC})
 
 target_link_libraries(${PROJECT_NAME} footbook_gtest glog base_lib boost_thread-mt
-        boost_system boost_filesystem ssl crypto mysqlclient)
+        boost_system boost_filesystem ssl crypto mysqlclient leveldb)
