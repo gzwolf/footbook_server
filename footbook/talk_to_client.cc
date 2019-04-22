@@ -82,6 +82,9 @@ bool TalkToClient::Context::OnMessageReceived(const Message &message) {
         case Message::kGroupChat:
             break;
         case Message::kSignIn: {
+            std::map<std::string, std::string> res;
+            DecodePayload(message.payload(), &res);
+            res.find("username");
             std::string user_name;
             std::string password;
             Client::Login(user_name, password, std::bind(

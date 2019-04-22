@@ -46,12 +46,33 @@ bool MysqlInterface::CreateDatabase(const std::string &data_name) {
 }
 
 bool MysqlInterface::CreateTable(const std::string &table_name) {
+    std::string query_str = "create table ";
+    query_str += table_name;
     if (mysql_query(&mysqlinterface_, table_name.c_str()) != 0) {
         ErrorMysqlInfo();
         return false;
     }
 
     return true;
+}
+
+bool MysqlInterface::DeleteTable(const std::string &table_name) {
+    std::string query_str = "drop table ";
+    query_str += table_name;
+    if (mysql_query(&mysqlinterface_, table_name.c_str()) != 0) {
+        ErrorMysqlInfo();
+        return false;
+    }
+}
+
+bool MysqlInterface::DeleteDatabase(const std::string &data_name) {
+    std::string query_str = "drop database ";
+    query_str += data_name;
+    if (mysql_query(&mysqlinterface_, data_name.c_str()) != 0) {
+        ErrorMysqlInfo();
+        return false;
+    }
+    return false;
 }
 
 
@@ -148,6 +169,8 @@ bool MysqlInterface::IsExistTable(const std::string &table_name) {
         return true;
     return false;
 }
+
+
 
 }   // namespace db
 }   // namespace footbook

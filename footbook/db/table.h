@@ -76,6 +76,7 @@ class Table {
     bool IsExistTable(const std::string& table_name);
     // 表不存在可以调用这个函数来创建表
     Status Create(const std::string& table_name);
+    Status Destroy(const std::string& table_name);
 
     ~Table();
 
@@ -106,7 +107,7 @@ Status Table::Get(const std::string& table_name, Flags flags,
     bool result = mysql_->ReadData(sql, select_result);
 
     if (!result || select_result.empty())
-        return Status::HttpError(mysql_->GetLastError());
+        return Status::DBError(mysql_->GetLastError());
     for (auto& vec : select_result) {
         Value value;
         ToTableStruct(vec, &value);
@@ -132,7 +133,7 @@ Status Table::Delete(const std::string& table_name,
             + FlagsToString(flags) + " = " + signal_quotes
             + std::to_string(value) + signal_quotes;
     if (!mysql_->DeleteData(sql))
-        return Status::HttpError(mysql_->GetLastError());
+        return Status::DBError(mysql_->GetLastError());
     return Status::Ok();
 }
 
@@ -144,7 +145,7 @@ Status Table::Update(const std::string& table_name,Flags flags,
             + FlagsToString(flags) + " = " + std::to_string(new_value)
             + "where " + FlagsToString(flags) + " = " + std::to_string(old_value);
     if (!mysql_->ModifyData(sql))
-        return Status::HttpError(mysql_->GetLastError());
+        return Status::DBError(mysql_->GetLastError());
     return Status::Ok();
 }
 

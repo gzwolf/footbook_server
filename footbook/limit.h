@@ -7,10 +7,13 @@
 
 namespace footbook {
 
+// Limit 采用左开又闭空间(100, 200]
 template<typename T>
 class Limit final {
  public:
     using size_type = T;
+
+    Limit() : min_(0), max_(0) {}
 
     Limit(size_type start, size_type end)
             : min_(start), max_(end) {}
@@ -32,7 +35,7 @@ class Limit final {
 
     template<typename Value>
     bool IsAmongLimit(Value value) const {
-        return (value >= min_ && value <= max_) ? true : false;
+        return (value >= min_ && value < max_) ? true : false;
     }
 
  private:

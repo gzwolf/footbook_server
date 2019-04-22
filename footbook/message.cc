@@ -127,14 +127,16 @@ bool DecodeMessage(const std::string& str, Message* msg) {
     return DecodeMessage(str.data(), str.size(), msg);
 }
 
-bool PutPadloadPart(const std::string& key,
+bool PutPayloadPart(const std::string& key,
                     const std::string& value,
                     std::string* res) {
     // key_size(6 bit) | value_size(10 bit) | key | value
+    // 0x3f = 63, 0x3ff = 1023
     if (key.size() > 0x3f || value.size() > 0x3ff)
         return false;
+    // 取key.size()的最后6位
     uint16_t header = key.size() & 0x3f;
-    //uint16_t value_size = value.size() & 0x3ff;
+    // 将key_size 左移10位，空出10位存放value_size.
     header = header << 10 | (value.size() & 0x3ff);
     char buf[sizeof(header)];
     memcpy(buf, &header, sizeof(header));
@@ -144,17 +146,23 @@ bool PutPadloadPart(const std::string& key,
     return true;
 }
 
-bool DecodePadload(const std::string& str,
+bool DecodePayload(const std::string& str,
                    std::map<std::string, std::string>* padload) {
+    // offset 表示当前偏移量
     int offset = 0;
+    // 如果str剩余的大小不足2个字节，结束
     while (str.size() >= offset + 2) {
         uint16_t header;
         memcpy(&header, str.c_str() + offset, sizeof(header));
+        // 分别取出key_size 和 value_size.
         uint16_t key_size = header >> 10;
         uint16_t value_size = header & 0x3ff;
+        // key_size 和value_size 应该在指定的范围大小，并且str剩余的大小
+        // 需要足够大.
         if (key_size > 0x3f || value_size > 0x3ff ||
             str.size() < offset + 2 + key_size + value_size)
             return false;
+        // 取出key和value
         int start = offset + 2;
         int end = start + key_size;
         std::string key(str.begin() + start, str.begin() + end);

@@ -91,10 +91,10 @@ bool EncodeMessage(const Message& msg, std::string* str);
 bool EncodeMessage(const Message& msg, char* str);
 bool DecodeMessage(const std::string& str, Message* msg);
 bool DecodeMessage(const char* str, Message* msg);
-bool PutPadloadPart(const std::string& key,
+bool PutPayloadPart(const std::string& key,
                     const std::string& value,
                     std::string* res);
-bool DecodePadload(const std::string& str,
+bool DecodePayload(const std::string& str,
                    std::map<std::string, std::string>* padload);
 }
 #endif //CAMPUS_CHAT_MESSAGE_H

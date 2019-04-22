@@ -61,6 +61,12 @@ Status Table::Create(const std::string &table_name) {
     return Status::Ok();
 }
 
+Status Table::Destroy(const std::string &table_name) {
+    if (!mysql_->DeleteTable(table_name))
+        return Status::DBError(mysql_->GetLastError());
+    return Status::Ok();
+}
+
 void Table::ToTableStruct(const std::vector<std::string> &str_vec,
                           Profile *profile) {
     DCHECK(str_vec.size() >= 12);
@@ -120,6 +126,8 @@ Table::Table(MysqlInterface *mysql)
 std::unique_ptr<Table> Table::New(MysqlInterface *mysql) {
     return std::unique_ptr<Table>(new Table(mysql));
 }
+
+
 
 
 }   // namespace db

@@ -74,7 +74,7 @@ void SMS::InitForAliyuSmsHttp(SMS::SMSHttpArg *sms_http) {
     sms_http->signature_version = "1.0";
     sms_http->version = "2017-05-25";
     sms_http->region_id = "cn-hangzhou";
-    sms_http->sign_name = "大学生快修";
+    sms_http->sign_name = "footbook";
     sms_http->template_code = "SMS_98465010";
     //sms_http->template_param = "{\"code\":\"362387\"}";
     sms_http->address = "dysmsapi.aliyuncs.com";

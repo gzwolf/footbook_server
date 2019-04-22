@@ -29,6 +29,13 @@ class MysqlInterface {
     // 创建表
     bool CreateTable(const std::string &table_name);
 
+    // 删除表
+    bool DeleteTable(const std::string &table_name);
+
+    // 删除数据库
+    bool DeleteDatabase(const std::string &data_name);
+
+
     bool IsExistTable(const std::string &table_name);
 
     // 关闭数据库连接
