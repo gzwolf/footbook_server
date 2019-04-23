@@ -13,9 +13,15 @@
 #include "footbook/port.h"
 #include "footbook/limit.h"
 #include "talk_to_client.h"
+#include "footbook/message_keys.h"
+#include "footbook/anolyze.h"
 
 
 namespace footbook {
+
+namespace {
+void AnolyzeLoginMsg();
+}
 
 TalkToClient::TalkToClient(boost::asio::io_service &io_service,
                            Server& footbook)
@@ -47,7 +53,7 @@ void TalkToClient::ProcessMessage(std::string str) {
     Message msg;
     bool result = DecodeMessage(str, &msg);
     if (result) {
-        if (!listener_->OnMessageReceived(msg))
+        if (!listener_->OnMessageReceived(msg).ok())
             listener_->OnBadMessageReceived(msg);
     } else {
         listener_->OnBadMessageReceived(msg);
@@ -66,7 +72,7 @@ void TalkToClient::OnRead(const ErrorCode &error_code, size_t byte) {
 
     } else {
         // 成功读取
-        CampusChatThread::PostTask(CampusChatThread::ID::MSG,
+        FootbookThread::PostTask(FootbookThread::ID::MSG,
                 base::Location(),
                 base::BindOnceClosure(&TalkToClient::ProcessMessage,
                 this, std::string(buf_, byte)));
@@ -75,29 +81,40 @@ void TalkToClient::OnRead(const ErrorCode &error_code, size_t byte) {
     Read();
 }
 
-bool TalkToClient::Context::OnMessageReceived(const Message &message) {
+Status TalkToClient::Context::OnMessageReceived(const Message &message) {
+    std::map<std::string, std::string> res;
+    if (!DecodePayload(message.payload(), &res))
+        return Status::InvalidData("Payload format error.");
     switch (static_cast<Message::MsgType>(message.type())) {
         case Message::kGeneralChat:
             break;
         case Message::kGroupChat:
             break;
         case Message::kSignIn: {
-            std::map<std::string, std::string> res;
-            DecodePayload(message.payload(), &res);
-            res.find("username");
-            std::string user_name;
-            std::string password;
+            std::string user_name, password;
+            Status status = Anolyze::GetInstance()->AnolyzeLoginMsg(
+                    res, &user_name, &password);
+            if (!status.ok())
+                return status;
             Client::Login(user_name, password, std::bind(
                     &Listener::OnLogin, this, std::placeholders::_1));
             break;
         }
-        case Message::kRegister:
+        case Message::kRegister: {
+            std::string user_name, password, verify_code;
+            Status status = Anolyze::GetInstance()->AnolyzeRegisterMsg(
+                    res, &user_name, &password, &verify_code);
+            if (!status.ok())
+                return status;
+            Client::Register(user_name, password, verify_code,
+                    std::bind(&Listener::OnRegister, this, std::placeholders::_1));
             break;
+        }
         case Message::kSendVerificationCode: {
             std::string phone_number;
             auto code = port::Random(Limit<int>(10000, 999999));
-            CampusChatThread::PostTaskAndReplyWithResult<Status, Status>(
-                    CampusChatThread::HTTP,
+            FootbookThread::PostTaskAndReplyWithResult<Status, Status>(
+                    FootbookThread::HTTP,
                     FROM_HERE,
                     std::bind(&SMS::Send, SMS::GetInstance(),
                     phone_number, std::to_string(code)),
@@ -105,9 +122,9 @@ bool TalkToClient::Context::OnMessageReceived(const Message &message) {
             break;
         }
         default:
-            return false;
+            return Status::InvalidData("Type is not exist.");
     }
-    return true;
+    return Status::Ok();
 }
 
 

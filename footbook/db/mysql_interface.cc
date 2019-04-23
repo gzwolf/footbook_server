@@ -63,6 +63,7 @@ bool MysqlInterface::DeleteTable(const std::string &table_name) {
         ErrorMysqlInfo();
         return false;
     }
+    return true;
 }
 
 bool MysqlInterface::DeleteDatabase(const std::string &data_name) {
@@ -72,7 +73,7 @@ bool MysqlInterface::DeleteDatabase(const std::string &data_name) {
         ErrorMysqlInfo();
         return false;
     }
-    return false;
+    return true;
 }
 
 

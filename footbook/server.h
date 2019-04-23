@@ -45,9 +45,9 @@ class Server {
     IOServicePool io_service_pool_;
     std::list<std::shared_ptr<TalkToClient>> clients_;
     boost::asio::ip::tcp::acceptor acceptor_;
-    CampusChatSubThread major_thread_;
-    CampusChatSubThread db_thread_;
-    CampusChatSubThread http_thread_;
+    FootbookSubThread major_thread_;
+    FootbookSubThread db_thread_;
+    FootbookSubThread http_thread_;
 
     DISALLOW_COPY_AND_ASSIGN(Server);
 };

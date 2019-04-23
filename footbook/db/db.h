@@ -9,7 +9,6 @@
 #include <memory>
 
 #include "base/macor.h"
-#include "footbook/db/mysql_interface.h"
 #include "footbook/status.h"
 #include "footbook/db/table.h"
 
@@ -41,8 +40,8 @@ class DB {
     explicit DB(const std::string& db_name);
 
  private:
+    std::unique_ptr<SqlDB> sql_db_;
     std::unique_ptr<Table> table_;
-    MysqlInterface mysql_;
     DISALLOW_COPY_AND_ASSIGN(DB);
 
 };

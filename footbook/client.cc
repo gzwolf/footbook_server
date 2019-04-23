@@ -50,16 +50,17 @@ void Client::Login(const std::string &user_name,
     }
 
     // 发送一个取数据到任务到DB线程
-    CampusChatThread::PostTaskAndReplyWithResult<std::vector<std::string>,
-            std::vector<std::string>>(CampusChatThread::DB, FROM_HERE,
+    FootbookThread::PostTaskAndReplyWithResult<std::vector<std::string>,
+            std::vector<std::string>>(FootbookThread::DB, FROM_HERE,
             std::bind(&DBSelect, std::string()),
             std::bind(&Client::OnGetDBCompleteForLogin, user_name, password,
             callback, std::placeholders::_1));
 }
 
 void Client::Register(const std::string &user_nmae,
-                       const std::string &password,
-                       const Client::RegisterCallback &callback) {
+                      const std::string &password,
+                      const std::string& verify_code,
+                      const Client::RegisterCallback &callback) {
 
 }
 

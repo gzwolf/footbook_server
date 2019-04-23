@@ -19,6 +19,7 @@ class SMS {
     Status Send(const std::string &phone_number,
               const std::string &code);
 
+    ~SMS() = default;
  private:
     // 阿里云短信服务的http请求参数结构
     struct SMSHttpArg {

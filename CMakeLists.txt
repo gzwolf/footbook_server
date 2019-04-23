@@ -45,13 +45,21 @@ set(SERVER_SRC
         footbook/client.h
         footbook/status.cc
         footbook/status.h
-        footbook/limit.h)
+        footbook/limit.h
+        footbook/message_keys.h
+        footbook/message_keys.cc
+        footbook/anolyze.cc
+        footbook/anolyze.h)
 
 if (LEVELDB_BUILD_TESTS)
     set(MAIN_SRC footbooktest/test_main.cc)
-    set(TEST_SRC footbooktest/message_unittest.cc footbooktest/port_unittest.cc footbooktest/limit_unittest.cc footbooktest/sms_unittest.cc footbooktest/db_unittest.cc)
+    set(TEST_SRC footbooktest/message_unittest.cc
+            footbooktest/port_unittest.cc
+            footbooktest/limit_unittest.cc
+            footbooktest/sms_unittest.cc
+            footbooktest/db_unittest.cc)
 else()
-    set(MAIN_SRC campus_chat_main.cc)
+    set(MAIN_SRC footbook_main.cc)
     set(TEST_SRC)
 endif()
 
@@ -73,9 +81,14 @@ set(DB_SRC
         footbook/db/table.cc
         footbook/db/table.h
         footbook/db/table_struct.h
-        footbook/db/table_struct.cc)
+        footbook/db/table_struct.cc
+        footbook/db/sql_db.cc
+        footbook/db/sql_db.h
+        footbook/db/db_base_factory.h
+        footbook/db/db_base_factory.cc)
 
-set(ALL_SRC ${SERVER_SRC} ${ALIBABA_SMS_SRC} ${MAIN_SRC} ${HTTP_SRC} ${DB_SRC} ${TEST_SRC} footbook/port.h)
+set(ALL_SRC ${SERVER_SRC} ${ALIBABA_SMS_SRC} ${MAIN_SRC} ${HTTP_SRC}
+        ${DB_SRC} ${TEST_SRC} footbook/port.h)
 
 add_subdirectory(footbook/base)
 add_subdirectory(footbook/third_party/gtest)

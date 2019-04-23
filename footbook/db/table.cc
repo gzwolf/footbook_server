@@ -37,7 +37,7 @@ std::string GetCommentTableName(const std::string& school,
 }
 
 bool Table::IsExistTable(const std::string &table_name) {
-   return mysql_->IsExistTable(table_name);
+   return sql_db_->IsExistTable(table_name);
 }
 
 Status Table::Create(const std::string &table_name) {
@@ -56,14 +56,14 @@ Status Table::Create(const std::string &table_name) {
         return Status::InvalidData("table_name is invaild!");
     }
 
-    if (mysql_->CreateTable(sql))
-        return Status::DBError(mysql_->GetLastError());
+    if (sql_db_->CreateTable(sql))
+        return Status::DBError(sql_db_->GetLastError());
     return Status::Ok();
 }
 
 Status Table::Destroy(const std::string &table_name) {
-    if (!mysql_->DeleteTable(table_name))
-        return Status::DBError(mysql_->GetLastError());
+    if (!sql_db_->DeleteTable(table_name))
+        return Status::DBError(sql_db_->GetLastError());
     return Status::Ok();
 }
 
@@ -119,12 +119,13 @@ Table::~Table() {
 }
 
 
-Table::Table(MysqlInterface *mysql)
-    : mysql_(mysql) {
+Table::Table(SqlDB *sql_db)
+    : sql_db_(sql_db) {
 }
 
-std::unique_ptr<Table> Table::New(MysqlInterface *mysql) {
-    return std::unique_ptr<Table>(new Table(mysql));
+std::unique_ptr<Table> Table::New(SqlDB *db) {
+    DCHECK(db);
+    return std::unique_ptr<Table>(new Table(db));
 }
 
 

@@ -13,7 +13,7 @@ class Message;
 
 class Listener {
  public:
-    virtual bool OnMessageReceived(const Message& message) = 0;
+    virtual Status OnMessageReceived(const Message& message) = 0;
     virtual void OnClientConnect() {}
     virtual void OnBadMessageReceived(const Message& message) {}
     virtual void OnLogin(const Status& status) {}

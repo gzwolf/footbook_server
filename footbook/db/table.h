@@ -35,7 +35,7 @@ class Table {
  public:
     // 传入MysqlInterface*，和传入的mysql共享同一个MysqlInterface,
     // 离开时不用delete这个指针
-    static std::unique_ptr<Table> New(MysqlInterface* mysql);
+    static std::unique_ptr<Table> New(SqlDB* sql_db);
 
     // 表基本操作，从数据库中获取指定到key值所对应到数据，table_name
     // 表示key值所在到表，flags表示key值到类型，最终会将结果放入
@@ -81,7 +81,7 @@ class Table {
     ~Table();
 
  protected:
-    explicit Table(MysqlInterface* mysql);
+    explicit Table(SqlDB* mysql);
  private:
     // 将从mysql查询到到结果转换成对应到表数据结构
     void ToTableStruct(const std::vector<std::string>& str_vec,
@@ -91,7 +91,7 @@ class Table {
     void ToTableStruct(const std::vector<std::string>& str_vec,
                         Comment* comment);
 
-    MysqlInterface* mysql_;
+    SqlDB* sql_db_;
     DISALLOW_COPY_AND_ASSIGN(Table);
 };
 
@@ -104,10 +104,10 @@ Status Table::Get(const std::string& table_name, Flags flags,
             " = " + signal_quotes + std::to_string(key) + signal_quotes;
 
     std::vector <std::vector<std::string>> select_result;
-    bool result = mysql_->ReadData(sql, select_result);
+    bool result = sql_db_->ReadData(sql, select_result);
 
     if (!result || select_result.empty())
-        return Status::DBError(mysql_->GetLastError());
+        return Status::DBError(sql_db_->GetLastError());
     for (auto& vec : select_result) {
         Value value;
         ToTableStruct(vec, &value);
@@ -120,8 +120,8 @@ template<typename Value>
 Status Table::Put(const std::string& table_name, const Value& value) {
     std::string sql = "insert into " + table_name + value.ToInsertSql();
 
-    if (!mysql_->WriteData(sql))
-        return Status::HttpError(mysql_->GetLastError());
+    if (!sql_db_->WriteData(sql))
+        return Status::HttpError(sql_db_->GetLastError());
     return Status::Ok();
 }
 
@@ -132,8 +132,8 @@ Status Table::Delete(const std::string& table_name,
     std::string sql = "delete from " + table_name + "where"
             + FlagsToString(flags) + " = " + signal_quotes
             + std::to_string(value) + signal_quotes;
-    if (!mysql_->DeleteData(sql))
-        return Status::DBError(mysql_->GetLastError());
+    if (!sql_db_->DeleteData(sql))
+        return Status::DBError(sql_db_->GetLastError());
     return Status::Ok();
 }
 
@@ -144,8 +144,8 @@ Status Table::Update(const std::string& table_name,Flags flags,
     std::string sql = "update into " + table_name + "set "
             + FlagsToString(flags) + " = " + std::to_string(new_value)
             + "where " + FlagsToString(flags) + " = " + std::to_string(old_value);
-    if (!mysql_->ModifyData(sql))
-        return Status::DBError(mysql_->GetLastError());
+    if (!sql_db_->ModifyData(sql))
+        return Status::DBError(sql_db_->GetLastError());
     return Status::Ok();
 }
 

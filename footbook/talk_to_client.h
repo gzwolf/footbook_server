@@ -54,7 +54,7 @@ class TalkToClient : public std::enable_shared_from_this<TalkToClient> {
     class Context : public Listener {
      public:
         explicit Context(Server& server);
-        bool OnMessageReceived(const Message& message) override;
+        Status OnMessageReceived(const Message& message) override;
         void OnClientConnect() override;
         void OnBadMessageReceived(const Message& message) override;
         void OnLogin(const Status& status) override;

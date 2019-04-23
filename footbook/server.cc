@@ -1,6 +1,8 @@
 //
 // Created by Sunshine on 2019-03-23.
 //
+#include <iomanip>
+#include <chrono>
 
 #include "footbook/server.h"
 
@@ -19,9 +21,9 @@ Server::Server(std::size_t thread_count,
     : thread_count_(thread_count),
       io_service_pool_(thread_count),
       acceptor_(io_service_pool_.get_io_service()),
-      major_thread_(CampusChatThread::MSG),
-      db_thread_(CampusChatThread::DB),
-      http_thread_(CampusChatThread::HTTP) {
+      major_thread_(FootbookThread::MSG),
+      db_thread_(FootbookThread::DB),
+      http_thread_(FootbookThread::HTTP) {
     if (g_instance == nullptr)
         g_instance = this;
     acceptor_.open(endpoint.protocol());
@@ -69,8 +71,10 @@ void Server::OnConnect(std::shared_ptr<TalkToClient> client,
         // 错误处理.
         LOG(ERROR) << "connect error!";
     } else {
+        auto t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
         LOG(INFO) << "There are new customer connections， IP is " <<
-                  client->sock().remote_endpoint().address().to_string();
+                  client->sock().remote_endpoint().address().to_string() <<
+                  "\t" << std::put_time(std::localtime(&t), "%F %T");
         // 开启会话.
         client->Start();
     }

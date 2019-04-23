@@ -22,6 +22,7 @@ class Client {
 
     static void Register(const std::string& user_nmae,
                          const std::string& password,
+                         const std::string& verify_code,
                          const RegisterCallback& callback);
 
     static Status LoginOut();
