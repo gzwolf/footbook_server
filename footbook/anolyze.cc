@@ -4,8 +4,8 @@
 
 #include "anolyze.h"
 
-#include "base/singleton.h"
 
+#include "base/singleton.h"
 #include "footbook/message_keys.h"
 #include "glog/logging.h"
 

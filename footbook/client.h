@@ -8,7 +8,14 @@
 #include <string>
 #include <functional>
 
+#include "base/macor.h"
 #include "footbook/status.h"
+#include "footbook/db/db.h"
+
+namespace base {
+template <typename Type>
+struct DefaultSingletonTraits;
+}   // namespace base
 
 namespace footbook {
 
@@ -16,23 +23,27 @@ class Client {
     using LoginCallback = std::function<void(const Status&)>;
     using RegisterCallback = std::function<void(const Status&)>;
  public:
-    static void Login(const std::string& user_name,
+    static Client* GetInstance();
+    void Login(const std::string& user_name,
                       const std::string& password,
                       const LoginCallback& callback);
 
-    static void Register(const std::string& user_nmae,
+    void Register(const std::string& user_nmae,
                          const std::string& password,
                          const std::string& verify_code,
                          const RegisterCallback& callback);
 
-    static Status LoginOut();
+    Status LoginOut();
 
  private:
-    static void OnGetDBCompleteForLogin(const std::string& user_name,
+    friend struct base::DefaultSingletonTraits<Client>;
+    void OnGetDBCompleteForLogin(const std::string& user_name,
                                         const std::string& password,
                                         const LoginCallback& callback,
                                         const std::vector<std::string>& result);
-    static std::vector<std::string> db_result_;
+    std::unique_ptr<db::DB> db_;
+    Client() = default;
+    DISALLOW_COPY_AND_ASSIGN(Client);
 };
 
 }

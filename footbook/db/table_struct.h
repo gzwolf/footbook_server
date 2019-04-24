@@ -169,7 +169,7 @@ std::string FlagsToString(const CommentFlags& comment_flags);
 
 
 inline std::string ProfileCreateTableSql() {
-    return "(id varchar(16) PRIMARY KEY, name varchar(16), school varchar(40),"
+    return "(account varchar(16) PRIMARY KEY, name varchar(16), school varchar(40),"
            " student_num varchar(16),sex int, faculty varchar(40), "
            "specialty varchar(40), grade varchar(8), entrance_time varchar(16),"
            "nick_name varchar(64), location varchar(64), wechat varchar(32))";

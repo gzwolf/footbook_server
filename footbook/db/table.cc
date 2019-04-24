@@ -45,18 +45,18 @@ Status Table::Create(const std::string &table_name) {
     if (pos == std::string::npos)
         return Status::InvalidData("table_name is invalid!");
     std::string table_suffix = table_name.substr(pos + 1);
-    std::string sql;
+    std::string sql = table_name;
     if (table_suffix == kProfileTableSuffix) {
-        sql = ProfileCreateTableSql();
+        sql += ProfileCreateTableSql();
     } else if (table_suffix == kIdeaTableSuffix) {
-        sql = IdeaCreateTableSql();
+        sql += IdeaCreateTableSql();
     } else if (table_suffix == kCommentTableSuffix) {
-        sql = CommentCreateTableSql();
+        sql += CommentCreateTableSql();
     } else {
         return Status::InvalidData("table_name is invaild!");
     }
 
-    if (sql_db_->CreateTable(sql))
+    if (!sql_db_->CreateTable(sql))
         return Status::DBError(sql_db_->GetLastError());
     return Status::Ok();
 }
@@ -121,6 +121,7 @@ Table::~Table() {
 
 Table::Table(SqlDB *sql_db)
     : sql_db_(sql_db) {
+    DCHECK(sql_db_);
 }
 
 std::unique_ptr<Table> Table::New(SqlDB *db) {

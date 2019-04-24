@@ -11,7 +11,7 @@
 namespace footbook {
 
 namespace {
-constexpr std::size_t kHeaderSize = 17;
+constexpr std::size_t kHeaderSize = 22;
 
 
 
@@ -27,7 +27,7 @@ Message::Message(const char *data, int data_len)
 
 }
 
-Message::Message(uint32_t type) {
+Message::Message(uint8_t type) {
     header_.type = type;
 }
 
@@ -47,9 +47,9 @@ bool EncodeMessage(const Message& msg, std::string* str) {
     if (!str->empty())
         str->clear();
     PutFixed32(str, msg.payload_size());
-    PutFixed32(str, msg.type());
-    PutFixed32(str, msg.sender());
-    PutFixed32(str, msg.receiver());
+    PutFixed64(str, msg.sender());
+    PutFixed64(str, msg.receiver());
+    PutFixed8(str, msg.type());
     PutFixed8(str, msg.status());
     str->append(msg.payload(), msg.payload_size());
     return true;
@@ -66,21 +66,22 @@ bool EncodeMessage(const Message& msg, char* str, int len) {
         return false;
     EncodeFixed32(str + offset, msg.payload_size());
     offset += cur_len;
-    cur_len = sizeof(msg.type());
-    if (len < offset + cur_len)
-        return false;
-    EncodeFixed32(str + offset, msg.type());
+
     offset += cur_len;
     cur_len = sizeof(msg.sender());
     if (len < offset + cur_len)
         return false;
-    EncodeFixed32(str + offset, msg.sender());
+    EncodeFixed64(str + offset, msg.sender());
     offset += cur_len;
     cur_len = sizeof(msg.receiver());
     if (len < offset + cur_len)
         return false;
-    EncodeFixed32(str + offset, msg.receiver());
+    EncodeFixed64(str + offset, msg.receiver());
     offset += cur_len;
+    cur_len = sizeof(msg.type());
+    if (len < offset + cur_len)
+        return false;
+    EncodeFixed8(str + offset, msg.type());
     cur_len = sizeof(msg.status());
     if (len < offset + cur_len)
         return false;
@@ -110,12 +111,12 @@ bool DecodeMessage(const char* str, std::size_t len, Message* msg) {
     if (len - msg->header_size() < paload_size)
         return false;
     offset += sizeof(uint32_t);
-    msg->set_type(DecodeFixed32(str + offset));
-    offset += sizeof(uint32_t);
-    msg->set_sender(DecodeFixed32(str + offset));
-    offset += sizeof(uint32_t);
-    msg->set_receiver(DecodeFixed32(str + offset));
-    offset += sizeof(uint32_t);
+    msg->set_sender(DecodeFixed64(str + offset));
+    offset += sizeof(uint64_t);
+    msg->set_receiver(DecodeFixed64(str + offset));
+    offset += sizeof(uint64_t);
+    msg->set_type(DecodeFixed8(str + offset));
+    offset += sizeof(uint8_t);
     msg->set_status(DecodeFixed8(str + offset));
     offset += sizeof(uint8_t);
     std::string payload(str + offset, paload_size);

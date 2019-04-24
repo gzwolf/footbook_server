@@ -21,6 +21,7 @@ std::string FlagsToString(const ProfileFlags &profile_flags) {
             break;
         case ProfileFlags::kStudentNum:
             res = "student_num";
+            break;
         case ProfileFlags::kSex:
             res = "sex";
             break;

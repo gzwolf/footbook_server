@@ -6,9 +6,10 @@
 
 #include <functional>
 
-#include "glog/logging.h"
-#include "alias.h"
+#include "base/singleton.h"
 #include "base/threading/browser_thread.h"
+#include "glog/logging.h"
+#include "footbook/alias.h"
 #include "footbook/alibaba_sms/sms.h"
 
 namespace footbook {
@@ -28,6 +29,11 @@ std::vector<std::string> DBSelect(const std::string& str) {
 
 Status SendMsg(const std::string& str, int) {
     return Status();
+}
+
+Client *footbook::Client::GetInstance() {
+    return base::Singleton<Client,
+        base::LeakySingletonTraits<Client>>::get();
 }
 
 void Client::Login(const std::string &user_name,
@@ -53,7 +59,7 @@ void Client::Login(const std::string &user_name,
     FootbookThread::PostTaskAndReplyWithResult<std::vector<std::string>,
             std::vector<std::string>>(FootbookThread::DB, FROM_HERE,
             std::bind(&DBSelect, std::string()),
-            std::bind(&Client::OnGetDBCompleteForLogin, user_name, password,
+            std::bind(&Client::OnGetDBCompleteForLogin, this, user_name, password,
             callback, std::placeholders::_1));
 }
 

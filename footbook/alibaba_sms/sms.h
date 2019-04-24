@@ -10,6 +10,11 @@
 #include "footbook/status.h"
 #include "base/macor.h"
 
+namespace base {
+template <typename Type>
+struct DefaultSingletonTraits;
+}   // namespace base
+
 namespace footbook {
 
 class SMS {
@@ -19,8 +24,10 @@ class SMS {
     Status Send(const std::string &phone_number,
               const std::string &code);
 
-    ~SMS() = default;
  private:
+    friend struct base::DefaultSingletonTraits<SMS>;
+    SMS() = default;
+    ~SMS() = default;
     // 阿里云短信服务的http请求参数结构
     struct SMSHttpArg {
         // http 服务器地址
@@ -72,8 +79,7 @@ class SMS {
 
     void GeneratorURL(const SMSHttpArg &sms_http, std::string *url);
 
-    //SMS() = default;
-    //DISALLOW_COPY_AND_ASSIGN(SMS);
+    DISALLOW_COPY_AND_ASSIGN(SMS);
 };
 
 }   // namespace footbook

@@ -10,6 +10,7 @@
 #include <memory>
 
 #include "base/macor.h"
+#include "glog/logging.h"
 #include "footbook/db/table_struct.h"
 #include "footbook/status.h"
 #include "mysql_interface.h"
@@ -98,6 +99,8 @@ class Table {
 template<typename Flags, typename Key, typename Value>
 Status Table::Get(const std::string& table_name, Flags flags,
         const Key &key, std::vector<Value> *value_vec) {
+    DCHECK(value_vec);
+    value_vec->clear();
     std::string signal_quotes = "\"";
     std::string flags_name = FlagsToString(flags);
     std::string sql = "select * from " + table_name + " where " + flags_name +

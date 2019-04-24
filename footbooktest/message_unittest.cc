@@ -31,10 +31,10 @@ TEST(Message, DecodeAndEncodeForMessage) {
     // 测试消息编解码
     std::string str = "I love you!";
     footbook::Message msg(str);
-    msg.set_sender(123);
-    msg.set_receiver(0);
-    msg.set_status(3);
-    msg.set_type(0x1234);
+    msg.set_sender(13697163989);
+    msg.set_receiver(17771611074);
+    msg.set_status(8);
+    msg.set_type(0x12);
     std::string encode_str;
     footbook::Message decode_msg;
 

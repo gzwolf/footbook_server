@@ -8,7 +8,13 @@
 #include <string>
 #include <map>
 
+#include "base/macor.h"
 #include "footbook/status.h"
+
+namespace base {
+template <typename Type>
+struct DefaultSingletonTraits;
+}   // namespace base
 
 namespace footbook {
 
@@ -21,8 +27,11 @@ class Anolyze final {
     Status AnolyzeRegisterMsg(const std::map<std::string, std::string>& keys_map,
                               std::string* user_name, std::string* password,
                               std::string* verify_code);
-    ~Anolyze() = default;
  private:
+    friend struct base::DefaultSingletonTraits<Anolyze>;
+    Anolyze() = default;
+    ~Anolyze() = default;
+    DISALLOW_COPY_AND_ASSIGN(Anolyze);
 };
 
 

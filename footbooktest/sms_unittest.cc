@@ -9,10 +9,12 @@
 #include "footbook/port.h"
 
 TEST(SMS, SMSSendTest) {
+    /*
     auto code = port::Random(footbook::Limit<int>(100000, 1000000));
     footbook::Status status = footbook::SMS::GetInstance()->Send(
             "13971348462", std::to_string(code));
+            */
 
-    EXPECT_TRUE(status.ok());
+    //EXPECT_TRUE(status.ok());
 }
 

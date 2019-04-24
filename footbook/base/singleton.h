@@ -33,6 +33,8 @@ struct DefaultSingletonTraits {
 
 };
 
+
+
 template <typename Type>
 struct LeakySingletonTraits : public DefaultSingletonTraits<Type> {
 	static const bool kRegisterAtExit = false;

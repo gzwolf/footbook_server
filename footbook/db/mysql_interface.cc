@@ -48,7 +48,7 @@ bool MysqlInterface::CreateDatabase(const std::string &data_name) {
 bool MysqlInterface::CreateTable(const std::string &table_name) {
     std::string query_str = "create table ";
     query_str += table_name;
-    if (mysql_query(&mysqlinterface_, table_name.c_str()) != 0) {
+    if (mysql_query(&mysqlinterface_, query_str.c_str()) != 0) {
         ErrorMysqlInfo();
         return false;
     }
@@ -59,7 +59,7 @@ bool MysqlInterface::CreateTable(const std::string &table_name) {
 bool MysqlInterface::DeleteTable(const std::string &table_name) {
     std::string query_str = "drop table ";
     query_str += table_name;
-    if (mysql_query(&mysqlinterface_, table_name.c_str()) != 0) {
+    if (mysql_query(&mysqlinterface_, query_str.c_str()) != 0) {
         ErrorMysqlInfo();
         return false;
     }

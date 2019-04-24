@@ -20,24 +20,24 @@ namespace footbook {
 class Message {
  public:
     enum MsgType {
-        kGeneralChat = 0x1234,
+        kGeneralChat = 0x0,
         kGroupChat,
         kSignIn,
         kRegister,
         kSendVerificationCode
     };
 
-    explicit Message(uint32_t type);
+    explicit Message(uint8_t type);
     explicit Message(const std::string& str);
     Message(const char *data, int data_len);
 
     Message();
     ~Message();
 
-    void set_type(uint32_t type) { header()->type = type; }
-    void set_sender(uint32_t sender) { header()->sender = sender; }
-    void set_receiver(uint32_t receiver) { header()->receiver = receiver; }
-    void set_status(uint32_t status) { header()->status = status; }
+    void set_type(uint8_t type) { header()->type = type; }
+    void set_sender(uint64_t sender) { header()->sender = sender; }
+    void set_receiver(uint64_t receiver) { header()->receiver = receiver; }
+    void set_status(uint8_t status) { header()->status = status; }
 
     void set_payload(const char* data, int data_len) {
         DCHECK(data);
@@ -55,31 +55,27 @@ class Message {
 
     std::size_t header_size();
     uint32_t payload_size() const { return header()->payload_size; }
-    uint32_t type() const { return header()->type; }
-    uint32_t sender() const { return header()->sender; }
-    uint32_t receiver() const { return header()->receiver; }
+    uint8_t type() const { return header()->type; }
+    uint64_t sender() const { return header()->sender; }
+    uint64_t receiver() const { return header()->receiver; }
     uint8_t status() const { return header()->status; }
     const char* payload() const { return payload_.data(); }
     std::string payload() { return payload_; }
 
  protected:
-#pragma pack(push, 4)
     struct Header {
         uint32_t payload_size;        // 发送的数据的大小
-        uint32_t type;                // 消息类型
-        uint32_t sender;
-        uint32_t receiver;
+        uint64_t sender;
+        uint64_t receiver;
+        uint8_t type;                // 消息类型
         uint8_t  status;
     };
-#pragma pack(pop)
 
     Header *header() { return &header_; }
 
     const Header *header() const { return &header_; }
 
  private:
-
-    Status AddElement(const std::string& key, const std::string& value);
 
     Header header_;
     std::string payload_;            // 实际数据

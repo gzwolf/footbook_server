@@ -96,7 +96,7 @@ Status TalkToClient::Context::OnMessageReceived(const Message &message) {
                     res, &user_name, &password);
             if (!status.ok())
                 return status;
-            Client::Login(user_name, password, std::bind(
+            Client::GetInstance()->Login(user_name, password, std::bind(
                     &Listener::OnLogin, this, std::placeholders::_1));
             break;
         }
@@ -106,7 +106,7 @@ Status TalkToClient::Context::OnMessageReceived(const Message &message) {
                     res, &user_name, &password, &verify_code);
             if (!status.ok())
                 return status;
-            Client::Register(user_name, password, verify_code,
+            Client::GetInstance()->Register(user_name, password, verify_code,
                     std::bind(&Listener::OnRegister, this, std::placeholders::_1));
             break;
         }
