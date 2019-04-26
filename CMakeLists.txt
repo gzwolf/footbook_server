@@ -57,7 +57,7 @@ if (LEVELDB_BUILD_TESTS)
             footbooktest/port_unittest.cc
             footbooktest/limit_unittest.cc
             footbooktest/sms_unittest.cc
-            footbooktest/db_unittest.cc)
+            footbooktest/db_unittest.cc footbooktest/client_test.cc)
 else()
     set(MAIN_SRC footbook_main.cc)
     set(TEST_SRC)

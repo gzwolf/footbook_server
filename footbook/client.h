@@ -11,6 +11,7 @@
 #include "base/macor.h"
 #include "footbook/status.h"
 #include "footbook/db/db.h"
+#include "leveldb/db.h"
 
 namespace base {
 template <typename Type>
@@ -35,14 +36,17 @@ class Client {
 
     Status LoginOut();
 
+    leveldb::DB* leveldb_;
  private:
     friend struct base::DefaultSingletonTraits<Client>;
     void OnGetDBCompleteForLogin(const std::string& user_name,
-                                        const std::string& password,
-                                        const LoginCallback& callback,
-                                        const std::vector<std::string>& result);
-    std::unique_ptr<db::DB> db_;
-    Client() = default;
+                                 const std::string& password,
+                                 const std::shared_ptr<std::string> str,
+                                 const LoginCallback& callback,
+                                 const leveldb::Status& status);
+    std::shared_ptr<db::DB> db_;
+
+    Client();
     DISALLOW_COPY_AND_ASSIGN(Client);
 };
 

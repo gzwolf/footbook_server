@@ -9,6 +9,8 @@
 #define BASE_SIGNALETON_H
 
 #include <atomic>
+#include <footbook/client.h>
+
 
 #include "base/base_export.h"
 #include "base/lazy_instance_helpers.h"
@@ -16,6 +18,8 @@
 
 
 namespace base {
+
+
 
 template <typename Type>
 struct DefaultSingletonTraits {
@@ -32,6 +36,7 @@ struct DefaultSingletonTraits {
     static const bool kRegisterAtExit = true;
 
 };
+
 
 
 

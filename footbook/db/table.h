@@ -109,8 +109,10 @@ Status Table::Get(const std::string& table_name, Flags flags,
     std::vector <std::vector<std::string>> select_result;
     bool result = sql_db_->ReadData(sql, select_result);
 
+    /*
     if (!result || select_result.empty())
         return Status::DBError(sql_db_->GetLastError());
+        */
     for (auto& vec : select_result) {
         Value value;
         ToTableStruct(vec, &value);
@@ -132,7 +134,7 @@ template<typename Flags, typename Value>
 Status Table::Delete(const std::string& table_name,
         Flags flags, const Value &value) {
     std::string signal_quotes = "\"";
-    std::string sql = "delete from " + table_name + "where"
+    std::string sql = "delete from " + table_name + " where "
             + FlagsToString(flags) + " = " + signal_quotes
             + std::to_string(value) + signal_quotes;
     if (!sql_db_->DeleteData(sql))
@@ -144,9 +146,11 @@ template<typename Flags, typename Value>
 Status Table::Update(const std::string& table_name,Flags flags,
         const Value &old_value, const Value &new_value) {
     std::string signal_quotes = "\"";
-    std::string sql = "update into " + table_name + "set "
-            + FlagsToString(flags) + " = " + std::to_string(new_value)
-            + "where " + FlagsToString(flags) + " = " + std::to_string(old_value);
+    std::string sql = "update " + table_name + " set "
+            + FlagsToString(flags) + " = " + signal_quotes
+            + std::to_string(new_value) + signal_quotes
+            + " where " + FlagsToString(flags) + " = "
+            + signal_quotes + std::to_string(old_value) + signal_quotes;
     if (!sql_db_->ModifyData(sql))
         return Status::DBError(sql_db_->GetLastError());
     return Status::Ok();

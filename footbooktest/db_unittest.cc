@@ -41,10 +41,12 @@ void ProfileInitTo(footbook::db::Profile* profile) {
 TEST(DB, ProfileTableTest) {
     footbook::db::Profile profile;
     ProfileInitOne(&profile);
+    // 测试打开数据库
     std::shared_ptr<footbook::db::DB> db;
     auto status = footbook::db::DB::Open("footbook",
             footbook::db::DBType::kMysql, &db);
     EXPECT_TRUE(status.ok());
+    // 测试Put操作
     std::string table_name = footbook::db::GetProfileTableName(profile.school);
     status = db->Put(table_name, profile);
     EXPECT_TRUE(status.ok());
@@ -52,6 +54,7 @@ TEST(DB, ProfileTableTest) {
     status = db->Put(table_name, profile);
     EXPECT_TRUE(status.ok());
 
+    // 测试Get操作
     std::vector<footbook::db::Profile> cs_res;
     status = db->Get(table_name, footbook::db::ProfileFlags::kSpecialty, "CS", &cs_res);
     EXPECT_TRUE(status.ok());
@@ -75,7 +78,37 @@ TEST(DB, ProfileTableTest) {
     EXPECT_EQ(one_profile.student_num, "2015911074");
     EXPECT_EQ(one_profile.account, "17771611074");
 
+    // 测试Update功能
+    status = db->Update(table_name, footbook::db::ProfileFlags::kName,
+            "YangGuang", "GuangYang");
+    EXPECT_TRUE(status.ok());
+    try {
+        cs_res = db->Get<footbook::db::Profile>(table_name,
+                                                footbook::db::ProfileFlags::kStudentNum, "2015911074");
+    } catch (std::exception& exc) {
+        LOG(INFO) << exc.what();
+    }
 
+    EXPECT_FALSE(cs_res.empty());
+    EXPECT_TRUE(cs_res.size() == 1);
+    one_profile = cs_res.at(0);
+    EXPECT_EQ(one_profile.student_num, "2015911074");
+    EXPECT_EQ(one_profile.account, "17771611074");
+    EXPECT_EQ(one_profile.name, "GuangYang");
+
+
+    // 测试Delete功能
+    status = db->Delete(table_name, footbook::db::ProfileFlags::kName, "GuangYang");
+    EXPECT_TRUE(status.ok());
+
+    try {
+        cs_res = db->Get<footbook::db::Profile>(table_name,
+                                                footbook::db::ProfileFlags::kStudentNum, "2015911074");
+    } catch (std::exception& exc) {
+        LOG(INFO) << exc.what();
+    }
+
+    EXPECT_TRUE(cs_res.empty());
 
 
     bool res = db->DeleteTable(table_name);

@@ -7,6 +7,7 @@
 
 #include <string>
 #include <sstream>
+#include <ostream>
 
 #include "footbook/status.h"
 
@@ -61,14 +62,6 @@ struct Profile {
     std::string location;
     std::string wechat;
 
-    // 调用这个函数的时候必须初始化了
-    Status GetTableName(std::string* table_name) const {
-       if (school.empty())
-           return Status::MsgError("school is null!");
-       table_name->clear();
-       *table_name = school + "_profile";
-       return Status::Ok();
-    }
 
     std::string ToInsertSql() const {
         std::string sql = "(account, name, school, student_num, sex,"
